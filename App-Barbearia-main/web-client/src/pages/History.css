@@ -1,0 +1,169 @@
+.history-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.history-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.history-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.history-header h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.history-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.tab {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tab:hover {
+  color: #007AFF;
+}
+
+.tab.active {
+  color: #007AFF;
+  border-bottom-color: #007AFF;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.history-item {
+  display: flex;
+  gap: 24px;
+}
+
+.history-date {
+  flex-shrink: 0;
+}
+
+.date-box {
+  background: linear-gradient(135deg, #007AFF 0%, #0056b3 100%);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.date-day {
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.date-month {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.date-year {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+
+.history-details {
+  flex: 1;
+}
+
+.history-details h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.history-time {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.history-notes {
+  font-size: 0.9rem;
+  color: #999;
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.completed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-badge.cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  color: #666;
+}

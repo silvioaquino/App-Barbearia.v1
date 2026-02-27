@@ -1,0 +1,37 @@
+{
+  "health_check": {
+    "status": "PASS",
+    "response": {
+      "status": "healthy",
+      "service": "Barbershop Manager API",
+      "version": "1.0.0"
+    }
+  },
+  "services_endpoints": {
+    "get_services": {
+      "status": "FAIL",
+      "reason": "HTTP 500",
+      "response": "Internal Server Error"
+    }
+  },
+  "products_endpoints": {
+    "get_products": {
+      "status": "FAIL",
+      "reason": "HTTP 500",
+      "response": "Internal Server Error"
+    }
+  },
+  "appointments_endpoints": {
+    "get_appointments_no_auth": {
+      "status": "PASS",
+      "note": "Correctly returned 401 without authentication"
+    }
+  },
+  "cash_register_endpoints": {
+    "get_current_no_auth": {
+      "status": "PASS",
+      "note": "Correctly returned 401 without authentication"
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,143 @@
+.promotions-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.promotions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.promotions-header {
+  text-align: center;
+  margin-bottom: 50px;
+  color: white;
+}
+
+.promotions-header h1 {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.promotions-header p {
+  font-size: 1.2rem;
+  opacity: 0.95;
+}
+
+.promotions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.promo-card {
+  position: relative;
+  padding: 30px !important;
+  background: white !important;
+  overflow: visible;
+}
+
+.promo-badge {
+  position: absolute;
+  top: -10px;
+  right: 20px;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF3B30 100%);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.promo-card h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 16px;
+  margin-top: 10px;
+}
+
+.promo-description {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.promo-code {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.code-label {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.code-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #007AFF;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.promo-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.promo-valid {
+  font-size: 0.9rem;
+  color: #999;
+  margin: 0;
+}
+
+.btn-use-promo {
+  background: #007AFF;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-use-promo:hover {
+  background: #0056b3;
+  transform: translateY(-2px);
+}
+
+.promo-info {
+  background: white;
+  padding: 30px !important;
+}
+
+.promo-info h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.promo-info ol {
+  padding-left: 24px;
+}
+
+.promo-info li {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
