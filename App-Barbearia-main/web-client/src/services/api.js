@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://barber-dashboard-14.preview.emergentagent.com/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://cutflow-8.preview.emergentagent.com/api';
 
 const api = axios.create({
   baseURL: API_URL,

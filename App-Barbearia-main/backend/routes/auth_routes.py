@@ -17,27 +17,42 @@ async def create_session(
 ):
     """Exchange session_id for session_token"""
     
-    # Get user data from Emergent Auth
-    user_data = await exchange_session_id(session_id)
+    print(f"🔐 [AUTH] Recebido session_id: {session_id[:20]}...")
     
-    # Create user and session
-    user, session_token = await create_user_session(user_data, db)
-    
-    # Set cookie
-    response.set_cookie(
-        key="session_token",
-        value=session_token,
-        httponly=True,
-        secure=True,
-        samesite="none",
-        max_age=7 * 24 * 60 * 60,  # 7 days
-        path="/"
-    )
-    
-    return {
-        "user": UserResponse.model_validate(user),
-        "session_token": session_token
-    }
+    try:
+        # Get user data from Emergent Auth
+        print(f"📡 [AUTH] Chamando Emergent Auth para validar session_id...")
+        user_data = await exchange_session_id(session_id)
+        print(f"✅ [AUTH] Dados do usuário recebidos: {user_data.get('email')}")
+        
+        # Create user and session
+        print(f"💾 [AUTH] Criando/atualizando usuário no banco...")
+        user, session_token = await create_user_session(user_data, db)
+        print(f"✅ [AUTH] Usuário criado/atualizado: {user.email} (role: {user.role})")
+        print(f"✅ [AUTH] Session token gerado: {session_token[:20]}...")
+        
+        # Set cookie
+        response.set_cookie(
+            key="session_token",
+            value=session_token,
+            httponly=True,
+            secure=True,
+            samesite="none",
+            max_age=7 * 24 * 60 * 60,  # 7 days
+            path="/"
+        )
+        
+        print(f"🎉 [AUTH] Login completado com sucesso para {user.email}")
+        
+        return {
+            "user": UserResponse.model_validate(user),
+            "session_token": session_token
+        }
+    except Exception as e:
+        print(f"❌ [AUTH] Erro no login: {type(e).__name__}: {str(e)}")
+        import traceback
+        print(f"❌ [AUTH] Traceback: {traceback.format_exc()}")
+        raise
 
 @router.get("/me", response_model=UserResponse)
 async def get_me(
