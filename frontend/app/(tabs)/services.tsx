@@ -11,6 +11,7 @@ import {
   Switch,
 } from 'react-native';
 import { useStore } from '../../src/store/useStore';
+import { useRouter } from 'expo-router';
 import Card from '../../src/components/Card';
 import Button from '../../src/components/Button';
 import Input from '../../src/components/Input';
@@ -19,6 +20,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function Services() {
   const { services, setServices } = useStore();
+  const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [editingService, setEditingService] = useState<any>(null);
@@ -141,13 +143,18 @@ export default function Services() {
                   </Text>
                 )}
               </View>
-              <TouchableOpacity
+              {/*Botão ativar desativar */}
+              <View style={styles.activeToggle}>
+                <Text style={styles.activeLabel}>{item.is_active ? 'Ativo' : 'Inativo'}</Text>
+                <Switch value={item.is_active} onValueChange={() => handleToggleActive(item)} trackColor={{ true: '#34C759', false: '#CCC' }} />
+              </View>
+              {/*<TouchableOpacity
                 onPress={() => handleToggleActive(item)}
                 style={[
                   styles.statusDot,
                   { backgroundColor: item.is_active ? '#34C759' : '#999' },
                 ]}
-              />
+              />*/}
             </View>
 
             <View style={styles.serviceDetails}>
@@ -165,12 +172,21 @@ export default function Services() {
               </View>
             </View>
 
-            <Button
-              title="Editar"
-              variant="secondary"
-              onPress={() => handleEdit(item)}
-              style={styles.editButton}
-            />
+            <View style={styles.serviceActions}>
+              <Button
+                title="Editar"
+                variant="secondary"
+                onPress={() => handleEdit(item)}
+                style={styles.editButton}
+              />
+              <TouchableOpacity
+                style={styles.photosButton}
+                onPress={() => router.push({ pathname: '/service-photos', params: { serviceId: item.id, serviceName: item.name } })}
+              >
+                <Ionicons name="camera-outline" size={18} color="#007AFF" />
+                <Text style={styles.photosButtonText}>Fotos</Text>
+              </TouchableOpacity>
+            </View>
           </Card>
         )}
       />
@@ -237,6 +253,10 @@ export default function Services() {
 }
 
 const styles = StyleSheet.create({
+  
+  activeToggle: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  activeLabel: { fontSize: 12, color: '#666' },
+  
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
@@ -299,6 +319,27 @@ const styles = StyleSheet.create({
   },
   editButton: {
     marginTop: 8,
+  },
+  serviceActions: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 8,
+    alignItems: 'center',
+  },
+  photosButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+  },
+  photosButtonText: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: '600',
   },
   modal: {
     flex: 1,

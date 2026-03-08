@@ -78,17 +78,11 @@ export default function Loyalty() {
     } catch (e) { Alert.alert('Erro', 'Falha ao carregar histórico'); }
   };
 
-  if (loading) return <SafeAreaView style={s.container}><ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 40 }} /></SafeAreaView>;
+  if (loading) return <View style={s.container}><ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 40 }} /></View>;
 
   return (
-    <SafeAreaView style={s.container}>
+    <View style={s.container}>
       <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); loadData(); }} />}>
-        <View style={s.header}>
-          <Text style={s.title}>Programa de Fidelidade</Text>
-          <TouchableOpacity onPress={() => setShowConfig(true)} data-testid="loyalty-config-btn">
-            <Ionicons name="settings-outline" size={24} color="#007AFF" />
-          </TouchableOpacity>
-        </View>
 
         <View style={s.configCard}>
           <View style={s.configRow}>
@@ -233,7 +227,7 @@ export default function Loyalty() {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 }
 

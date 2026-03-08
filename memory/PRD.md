@@ -25,23 +25,30 @@ App completo de gestão de barbearia com app mobile (barbeiro), web app (cliente
 ### Relatórios Financeiros
 - Dashboard Hoje/Semana/Mês, Top serviços, Gráfico 7 dias
 
-### Promoções + Fotos
-- CRUD promoções, Upload de fotos de serviços
+### Promoções (Mobile + Web)
+- Tela completa no app mobile: Criar, Editar, Ativar/Desativar, Remover promoções
+- Acessível via Perfil > Gerenciamento > Promoções
+- Clientes veem promoções ativas no web-client
 
-### Lembretes WhatsApp (Mar 5, 2026)
-- Scheduler em background (a cada 5 min) verifica agendamentos na próxima hora
-- Envia lembrete automático via WhatsApp para o cliente
-- Marca agendamento como notificado para evitar duplicação
-- Endpoint manual POST /api/appointments/send-reminders para testes
+### Fotos de Serviços (Mobile)
+- Tela completa de gerenciamento de fotos por serviço
+- Upload via câmera ou galeria (expo-image-picker)
+- Botão "Fotos" em cada card de serviço na aba Serviços
+- API pública para exibição na página de agendamento
+
+### Lembretes WhatsApp
+- Scheduler background (5 min) - lembrete 1h antes do agendamento
+- Endpoint manual para testes
 
 ### Web Client
-- Histórico, Promoções, Fidelidade - tudo com APIs reais
+- Histórico, Promoções, Fidelidade com APIs reais
 
 ## Testing Status
 - iteration_1: 43/43 pass
 - iteration_2: 9/9 pass
 - iteration_3: 39/39 pass
+- iteration_4: 37/37 pass
 
 ## Notes
 - WhatsApp é ESTRUTURAL - funciona com credenciais Meta Business API
-- Login mobile requer configuração do IP local via "Configurar Servidor"
+- Login mobile: Configurar IP local via "Configurar Servidor"

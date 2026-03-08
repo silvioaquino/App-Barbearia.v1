@@ -105,36 +105,18 @@ export default function Products() {
 
   return (
     <View style={styles.container}>
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Produtos</Text>
-        
-      </View>
-    </View>
-      {/* Header 
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Produtos</Text>
-        <TouchableOpacity style={styles.addBtn} onPress={openAdd}>
-          <Ionicons name="add-circle" size={20} color="#FFF" />
-          <Text style={styles.addBtnText}>Novo</Text>
-        </TouchableOpacity>
-      </View>*/}
-      
-
-
       <FlatList
         data={products}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.list}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         ListHeaderComponent={
-                <Button
-                  title="Adicionar Produto"
-                  onPress={openAdd}
-                  style={styles.addButton}
-                />
-                }
+        <Button
+          title="Adicionar Produto"
+          onPress={openAdd}
+          style={styles.addButton}
+        />
+  }
         ListEmptyComponent={
           <View style={styles.empty}>
             <Ionicons name="cube-outline" size={64} color="#CCC" />
@@ -244,12 +226,9 @@ export default function Products() {
 }
 
 const styles = StyleSheet.create({
-  addButton: {
-    marginBottom: 16,
-  },
   container: { flex: 1, backgroundColor: '#F8F9FA' },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 26, backgroundColor: '#1A73E8', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
-  headerTitle: { fontSize: 20, fontWeight: '800', color: '#FFF'},
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
+  headerTitle: { fontSize: 20, fontWeight: '800', color: '#333' },
   addBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#1A73E8', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 8, gap: 4 },
   addBtnText: { color: '#FFF', fontWeight: '700', fontSize: 14 },
   list: { padding: 16, paddingBottom: 40 },
@@ -257,7 +236,7 @@ const styles = StyleSheet.create({
   emptyText: { fontSize: 16, color: '#999' },
   emptyBtn: { marginTop: 8, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: '#1A73E8', borderRadius: 8 },
   emptyBtnText: { color: '#FFF', fontWeight: '600' },
-
+  addButton: {marginBottom: 16,},
   card: { backgroundColor: '#FFF', borderRadius: 12, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: '#E8E8E8' },
   cardInactive: { opacity: 0.6, borderColor: '#DDD' },
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },

@@ -134,6 +134,21 @@ export default function Profile() {
 
       {user?.role === 'barber' && (
         <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Gerenciamento</Text>
+          <Card>
+            <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/promotions-manage')}>
+              <View style={styles.menuItemLeft}>
+                <Ionicons name="pricetag-outline" size={24} color="#FF6B00" />
+                <Text style={styles.menuItemText}>Promoções</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={20} color="#999" />
+            </TouchableOpacity>
+          </Card>
+        </View>
+      )}
+
+      {user?.role === 'barber' && (
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>Integrações</Text>
           <Card>
             <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/whatsapp-settings')}>

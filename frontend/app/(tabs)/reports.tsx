@@ -37,14 +37,11 @@ export default function Reports() {
 
   const maxRevenue = Math.max(...dailyData.map(d => d.services + d.products), 1);
 
-  if (loading) return <SafeAreaView style={s.container}><ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 40 }} /></SafeAreaView>;
+  if (loading) return <View style={s.container}><ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 40 }} /></View>;
 
   return (
-    <SafeAreaView style={s.container}>
+    <View style={s.container}>
       <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => { setRefreshing(true); loadData(); }} />}>
-        <View style={s.header}>
-          <Text style={s.title}>Relatórios</Text>
-        </View>
 
         <View style={s.periodBar}>
           {PERIODS.map((p) => (
@@ -61,7 +58,7 @@ export default function Reports() {
               <Text style={s.revenueValue}>R$ {financial.total_revenue.toFixed(2).replace('.', ',')}</Text>
               <View style={s.revenueBreakdown}>
                 <View style={s.revItem}>
-                  <View style={[s.revDot, { backgroundColor: '#34C759' }]} />
+                  <View style={[s.revDot, { backgroundColor: '#007AFF' }]} />
                   <Text style={s.revText}>Serviços: R$ {financial.total_services.toFixed(2).replace('.', ',')}</Text>
                 </View>
                 <View style={s.revItem}>
@@ -124,7 +121,7 @@ export default function Reports() {
 
         <View style={{ height: 40 }} />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 

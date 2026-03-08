@@ -226,7 +226,7 @@ export default function ScheduleScreen() {
 
   if (loading) {
     return (
-      <View style={[styles.container, styles.center, { paddingTop: insets.top }]}>
+      <View style={[styles.container, styles.center]}>
         <ActivityIndicator size="large" color="#1A73E8" />
       </View>
     );
@@ -239,12 +239,7 @@ export default function ScheduleScreen() {
   }));
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Minha Agenda</Text>
-        <Text style={styles.headerSubtitle}>Configure seus horários com intervalo de almoço</Text>
-      </View>
-
+    <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
         {/* Quick actions */}
         <View style={styles.actionsRow}>
@@ -423,9 +418,9 @@ export default function ScheduleScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F8F9FA' },
   center: { justifyContent: 'center', alignItems: 'center' },
-  header: { paddingHorizontal: 20, paddingVertical: 16, backgroundColor: '#1A73E8', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
-  headerTitle: { fontSize: 24, fontWeight: '800', color: '#FFF' },
-  headerSubtitle: { fontSize: 13, color: '#FFF', marginTop: 4 },
+  header: { paddingHorizontal: 20, paddingVertical: 16, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
+  headerTitle: { fontSize: 24, fontWeight: '800', color: '#333' },
+  headerSubtitle: { fontSize: 13, color: '#666', marginTop: 4 },
   scrollView: { flex: 1 },
   scrollContent: { padding: 16, paddingBottom: 40 },
 
