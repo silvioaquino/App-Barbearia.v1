@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+/*import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -241,7 +241,7 @@ export default function ScheduleScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        {/* Quick actions */}
+        {/* Quick actions /}
         <View style={styles.actionsRow}>
           <TouchableOpacity style={styles.quickSetupBtn} onPress={handleQuickSetup}>
             <Ionicons name="flash" size={18} color="#FFF" />
@@ -255,7 +255,7 @@ export default function ScheduleScreen() {
           )}
         </View>
 
-        {/* Days list */}
+        {/* Days list /}
         {schedulesByDay.map(day => (
           <View key={day.key} style={styles.dayCard}>
             <View style={styles.dayHeader}>
@@ -306,7 +306,7 @@ export default function ScheduleScreen() {
         ))}
       </ScrollView>
 
-      {/* Edit Modal */}
+      {/* Edit Modal /}
       <Modal visible={showModal} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setShowModal(false)}>
         <View style={[styles.modalContainer, { paddingTop: insets.top + 16 }]}>
           <View style={styles.modalHeader}>
@@ -314,6 +314,1126 @@ export default function ScheduleScreen() {
               <Text style={styles.modalCancel}>Cancelar</Text>
             </TouchableOpacity>
             <Text style={styles.modalTitle}>{DAYS[selectedDay]?.label}</Text>
+            <TouchableOpacity onPress={handleSave} disabled={saving}>
+              {saving ? <ActivityIndicator size="small" color="#1A73E8" /> : <Text style={styles.modalSave}>Salvar</Text>}
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView style={styles.modalScroll} contentContainerStyle={styles.modalContent}>
+            <Text style={styles.sectionTitle}>Blocos de Horário</Text>
+            <Text style={styles.sectionHint}>Adicione intervalos para configurar almoço ou pausas</Text>
+
+            {blocks.map((block, idx) => (
+              <View key={idx} style={styles.blockCard}>
+                <View style={styles.blockCardHeader}>
+                  <Text style={styles.blockCardTitle}>
+                    {idx === 0 ? 'Manhã / Período 1' : idx === 1 ? 'Tarde / Período 2' : `Período ${idx + 1}`}
+                  </Text>
+                  {blocks.length > 1 && (
+                    <TouchableOpacity onPress={() => removeBlock(idx)}>
+                      <Ionicons name="close-circle" size={22} color="#FF3B30" />
+                    </TouchableOpacity>
+                  )}
+                </View>
+
+                <Text style={styles.fieldLabel}>Início</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <View style={styles.timeRow}>
+                    {TIME_OPTIONS.map(t => (
+                      <TouchableOpacity
+                        key={`s-${idx}-${t}`}
+                        style={[styles.timeChip, block.start === t && styles.timeChipActive]}
+                        onPress={() => updateBlock(idx, 'start', t)}
+                      >
+                        <Text style={[styles.timeChipText, block.start === t && styles.timeChipTextActive]}>{t}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </ScrollView>
+
+                <Text style={styles.fieldLabel}>Término</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <View style={styles.timeRow}>
+                    {TIME_OPTIONS.map(t => (
+                      <TouchableOpacity
+                        key={`e-${idx}-${t}`}
+                        style={[styles.timeChip, block.end === t && styles.timeChipActive]}
+                        onPress={() => updateBlock(idx, 'end', t)}
+                      >
+                        <Text style={[styles.timeChipText, block.end === t && styles.timeChipTextActive]}>{t}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </ScrollView>
+
+                {idx < blocks.length - 1 && (
+                  <View style={styles.lunchBanner}>
+                    <Ionicons name="restaurant" size={16} color="#FF9500" />
+                    <Text style={styles.lunchBannerText}>Intervalo / Almoço</Text>
+                  </View>
+                )}
+              </View>
+            ))}
+
+            <TouchableOpacity style={styles.addBlockBtn} onPress={addBlock}>
+              <Ionicons name="add-circle-outline" size={20} color="#1A73E8" />
+              <Text style={styles.addBlockText}>Adicionar Bloco</Text>
+            </TouchableOpacity>
+
+            {/* Slot duration /}
+            <Text style={[styles.sectionTitle, { marginTop: 24 }]}>Duração do Slot</Text>
+            <View style={styles.durationGrid}>
+              {DURATION_OPTIONS.map(d => (
+                <TouchableOpacity
+                  key={d}
+                  style={[styles.durationChip, slotDuration === d && styles.durationChipActive]}
+                  onPress={() => setSlotDuration(d)}
+                >
+                  <Text style={[styles.durationText, slotDuration === d && styles.durationTextActive]}>{d} min</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Preview /}
+            <View style={styles.previewBox}>
+              <Text style={styles.previewTitle}>Resumo</Text>
+              {blocks.map((b, i) => (
+                <Text key={i} style={styles.previewText}>
+                  {i === 0 ? '🌅' : i === 1 ? '🌇' : '🌙'} {b.start} às {b.end} ({Math.floor(((parseInt(b.end.split(':')[0]) * 60 + parseInt(b.end.split(':')[1])) - (parseInt(b.start.split(':')[0]) * 60 + parseInt(b.start.split(':')[1]))) / slotDuration)} slots de {slotDuration}min)
+                </Text>
+              ))}
+              {blocks.length > 1 && (
+                <Text style={styles.previewLunch}>
+                  🍽️ Intervalo: {blocks[0].end} às {blocks[1].start}
+                </Text>
+              )}
+            </View>
+          </ScrollView>
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, backgroundColor: '#F8F9FA' },
+  center: { justifyContent: 'center', alignItems: 'center' },
+  header: { paddingHorizontal: 20, paddingVertical: 16, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
+  headerTitle: { fontSize: 24, fontWeight: '800', color: '#333' },
+  headerSubtitle: { fontSize: 13, color: '#666', marginTop: 4 },
+  scrollView: { flex: 1 },
+  scrollContent: { padding: 16, paddingBottom: 40 },
+
+  actionsRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 },
+  quickSetupBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#1A73E8', paddingHorizontal: 14, paddingVertical: 10, borderRadius: 10, gap: 6 },
+  quickSetupText: { color: '#FFF', fontWeight: '700', fontSize: 13 },
+  clearBtn: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1, borderColor: '#FF3B30', gap: 4 },
+  clearBtnText: { color: '#FF3B30', fontWeight: '600', fontSize: 13 },
+
+  dayCard: { backgroundColor: '#FFF', borderRadius: 12, padding: 14, marginBottom: 10, borderWidth: 1, borderColor: '#E8E8E8' },
+  dayHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  dayLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  dayBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
+  dayBadgeActive: { backgroundColor: '#1A73E8' },
+  dayBadgeInactive: { backgroundColor: '#CCC' },
+  dayBadgeText: { color: '#FFF', fontWeight: '700', fontSize: 12 },
+  dayLabel: { fontSize: 15, fontWeight: '600', color: '#333' },
+  dayActions: { flexDirection: 'row', gap: 8 },
+  dayDeleteBtn: { padding: 6 },
+  dayEditBtn: { padding: 6, backgroundColor: '#E8F0FE', borderRadius: 6 },
+
+  dayEmpty: { marginTop: 8, paddingVertical: 8 },
+  dayEmptyText: { fontSize: 13, color: '#999', fontStyle: 'italic' },
+
+  blocksContainer: { marginTop: 10, gap: 4 },
+  blockRow: { paddingVertical: 4 },
+  blockTime: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  blockTimeText: { fontSize: 14, fontWeight: '600', color: '#333' },
+  blockMeta: { fontSize: 11, color: '#999', marginLeft: 20, marginTop: 2 },
+  lunchIndicator: { flexDirection: 'row', alignItems: 'center', gap: 4, marginLeft: 20, marginTop: 4, marginBottom: 2 },
+  lunchText: { fontSize: 11, color: '#FF9500', fontStyle: 'italic' },
+
+  // Modal
+  modalContainer: { flex: 1, backgroundColor: '#F8F9FA' },
+  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingBottom: 16, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
+  modalCancel: { fontSize: 16, color: '#666' },
+  modalTitle: { fontSize: 17, fontWeight: '700', color: '#333' },
+  modalSave: { fontSize: 16, fontWeight: '700', color: '#1A73E8' },
+  modalScroll: { flex: 1 },
+  modalContent: { padding: 16, paddingBottom: 40 },
+
+  sectionTitle: { fontSize: 16, fontWeight: '700', color: '#333', marginBottom: 4 },
+  sectionHint: { fontSize: 12, color: '#999', marginBottom: 12 },
+
+  blockCard: { backgroundColor: '#FFF', borderRadius: 12, padding: 14, marginBottom: 12, borderWidth: 1, borderColor: '#E8E8E8' },
+  blockCardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
+  blockCardTitle: { fontSize: 14, fontWeight: '700', color: '#1A73E8' },
+  fieldLabel: { fontSize: 13, fontWeight: '600', color: '#333', marginBottom: 6, marginTop: 8 },
+  timeRow: { flexDirection: 'row', gap: 6 },
+  timeChip: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, backgroundColor: '#F5F5F5', borderWidth: 1, borderColor: '#E0E0E0' },
+  timeChipActive: { backgroundColor: '#1A73E8', borderColor: '#1A73E8' },
+  timeChipText: { fontSize: 13, fontWeight: '600', color: '#666' },
+  timeChipTextActive: { color: '#FFF' },
+
+  lunchBanner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 12, paddingVertical: 8, backgroundColor: '#FFF3E0', borderRadius: 8 },
+  lunchBannerText: { fontSize: 13, fontWeight: '600', color: '#FF9500' },
+
+  addBlockBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingVertical: 12, borderWidth: 1.5, borderColor: '#1A73E8', borderRadius: 10, borderStyle: 'dashed' },
+  addBlockText: { fontSize: 14, fontWeight: '600', color: '#1A73E8' },
+
+  durationGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginTop: 8 },
+  durationChip: { paddingHorizontal: 16, paddingVertical: 10, borderRadius: 8, backgroundColor: '#FFF', borderWidth: 1.5, borderColor: '#DDD' },
+  durationChipActive: { backgroundColor: '#1A73E8', borderColor: '#1A73E8' },
+  durationText: { fontSize: 14, fontWeight: '600', color: '#666' },
+  durationTextActive: { color: '#FFF' },
+
+  previewBox: { backgroundColor: '#E8F0FE', borderRadius: 12, padding: 16, marginTop: 20 },
+  previewTitle: { fontSize: 14, fontWeight: '700', color: '#1A73E8', marginBottom: 8 },
+  previewText: { fontSize: 13, color: '#333', marginBottom: 4 },
+  previewLunch: { fontSize: 13, color: '#FF9500', fontWeight: '600', marginTop: 4 },
+});*/
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useCallback, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  Modal,
+  TextInput,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from 'expo-router';
+import api from '../../src/services/api';
+
+const DAYS = [
+  { key: 0, label: 'Segunda-feira', short: 'Seg' },
+  { key: 1, label: 'Terça-feira', short: 'Ter' },
+  { key: 2, label: 'Quarta-feira', short: 'Qua' },
+  { key: 3, label: 'Quinta-feira', short: 'Qui' },
+  { key: 4, label: 'Sexta-feira', short: 'Sex' },
+  { key: 5, label: 'Sábado', short: 'Sáb' },
+  { key: 6, label: 'Domingo', short: 'Dom' },
+];
+
+const TIME_OPTIONS = [
+  '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
+  '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
+  '18:00', '19:00', '20:00', '21:00', '22:00',
+];
+
+const DURATION_OPTIONS = [15, 20, 30, 45, 60];
+
+// Função para formatar data
+const formatDate = (date: Date): string => {
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
+
+const formatDateAPI = (date: Date): string => {
+  const day = date.getDate().toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const year = date.getFullYear();
+  return `${year}-${month}-${day}`;
+};
+
+// Função para formatar dia da semana por extenso
+const getDayName = (date: Date): string => {
+  const day = date.getDay();
+  const days = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
+  return days[day];
+};
+
+// Função para parsear data do formato DD/MM/YYYY
+const parseDate = (dateStr: string): Date | null => {
+  const parts = dateStr.split('/');
+  if (parts.length === 3) {
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const year = parseInt(parts[2], 10);
+    return new Date(year, month, day);
+  }
+  return null;
+};
+
+// Função para obter dia da semana (0 = Segunda, 6 = Domingo)
+const getDayOfWeek = (date: Date): number => {
+  const day = date.getDay(); // 0 = Domingo, 1 = Segunda, ...
+  return day === 0 ? 6 : day - 1; // Ajustando para nosso formato (0 = Segunda)
+};
+
+// Gerar datas entre duas datas
+const getDatesBetween = (startDate: Date, endDate: Date): Date[] => {
+  const dates: Date[] = [];
+  const currentDate = new Date(startDate);
+  
+  while (currentDate <= endDate) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  return dates;
+};
+
+// Gerar dias da semana para uma data específica
+const getWeekDates = (date: Date): Date[] => {
+  const dayOfWeek = date.getDay(); // 0 = Domingo
+  const monday = new Date(date);
+  const diff = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // Ajustar para segunda como primeiro dia
+  monday.setDate(date.getDate() - diff);
+  
+  const weekDates: Date[] = [];
+  for (let i = 0; i < 7; i++) {
+    const day = new Date(monday);
+    day.setDate(monday.getDate() + i);
+    weekDates.push(day);
+  }
+  
+  return weekDates;
+};
+
+// Gerar dias do mês
+const getMonthDates = (date: Date): Date[] => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  
+  return getDatesBetween(firstDay, lastDay);
+};
+
+// Agrupar datas por semana
+const groupDatesByWeek = (dates: Date[]): Date[][] => {
+  const weeks: Date[][] = [];
+  let currentWeek: Date[] = [];
+  
+  dates.forEach((date, index) => {
+    const dayOfWeek = date.getDay();
+    if (dayOfWeek === 1 && currentWeek.length > 0) { // Segunda-feira
+      weeks.push([...currentWeek]);
+      currentWeek = [];
+    }
+    currentWeek.push(date);
+  });
+  
+  if (currentWeek.length > 0) {
+    weeks.push(currentWeek);
+  }
+  
+  return weeks;
+};
+
+export default function ScheduleScreen() {
+  const insets = useSafeAreaInsets();
+  const [schedules, setSchedules] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [showBatchModal, setShowBatchModal] = useState(false);
+  const [saving, setSaving] = useState(false);
+  
+  // View mode
+  const [viewMode, setViewMode] = useState<'week' | 'month'>('week');
+  const [currentDate, setCurrentDate] = useState(new Date(2026, 2, 9)); // 09-03-2026
+  
+  // Date range states for batch
+  const [startDate, setStartDate] = useState(new Date(2026, 2, 9));
+  const [endDate, setEndDate] = useState(new Date(2026, 2, 15));
+  const [startDateText, setStartDateText] = useState('09/03/2026');
+  const [endDateText, setEndDateText] = useState('15/03/2026');
+  const [showStartPicker, setShowStartPicker] = useState(false);
+  const [showEndPicker, setShowEndPicker] = useState(false);
+  const [batchType, setBatchType] = useState<'week' | 'month' | 'custom'>('week');
+  
+  // Selected days for batch creation
+  const [selectedDays, setSelectedDays] = useState<number[]>([0, 1, 2, 3, 4]);
+
+  // Form state - support multiple blocks
+  const [selectedDay, setSelectedDay] = useState<number>(0);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [blocks, setBlocks] = useState<{start: string, end: string}[]>([
+    { start: '09:00', end: '12:00' },
+    { start: '14:00', end: '20:00' },
+  ]);
+  const [slotDuration, setSlotDuration] = useState(30);
+
+  // Dates to display
+  const [displayDates, setDisplayDates] = useState<Date[]>([]);
+  const [groupedWeeks, setGroupedWeeks] = useState<Date[][]>([]);
+
+  useEffect(() => {
+    updateDisplayDates();
+  }, [currentDate, viewMode]);
+
+  const updateDisplayDates = () => {
+    if (viewMode === 'week') {
+      const weekDates = getWeekDates(currentDate);
+      setDisplayDates(weekDates);
+      setGroupedWeeks([weekDates]);
+    } else {
+      const monthDates = getMonthDates(currentDate);
+      setDisplayDates(monthDates);
+      setGroupedWeeks(groupDatesByWeek(monthDates));
+    }
+  };
+
+  const navigatePrevious = () => {
+    const newDate = new Date(currentDate);
+    if (viewMode === 'week') {
+      newDate.setDate(currentDate.getDate() - 7);
+    } else {
+      newDate.setMonth(currentDate.getMonth() - 1);
+    }
+    setCurrentDate(newDate);
+  };
+
+  const navigateNext = () => {
+    const newDate = new Date(currentDate);
+    if (viewMode === 'week') {
+      newDate.setDate(currentDate.getDate() + 7);
+    } else {
+      newDate.setMonth(currentDate.getMonth() + 1);
+    }
+    setCurrentDate(newDate);
+  };
+
+  const getScheduleForDate = (date: Date) => {
+    const dayOfWeek = getDayOfWeek(date);
+    return schedules
+      .filter(s => s.day_of_week === dayOfWeek)
+      .sort((a: any, b: any) => a.start_time.localeCompare(b.start_time));
+  };
+
+  const openAddForDate = (date: Date) => {
+    const dayOfWeek = getDayOfWeek(date);
+    setSelectedDay(dayOfWeek);
+    setSelectedDate(date);
+    
+    const daySchedules = schedules.filter(s => s.day_of_week === dayOfWeek);
+    if (daySchedules.length > 0) {
+      setBlocks(daySchedules.map(s => ({ start: s.start_time, end: s.end_time })));
+      setSlotDuration(daySchedules[0].slot_duration_minutes || 30);
+    } else {
+      setBlocks([{ start: '09:00', end: '12:00' }, { start: '14:00', end: '20:00' }]);
+      setSlotDuration(30);
+    }
+    setShowModal(true);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadSchedules();
+    }, [])
+  );
+
+  const loadSchedules = async () => {
+    try {
+      const res = await api.get('/schedule/');
+      setSchedules(res.data);
+    } catch (err) {
+      console.error('Error loading schedules:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const addBlock = () => {
+    setBlocks([...blocks, { start: '14:00', end: '18:00' }]);
+  };
+
+  const removeBlock = (index: number) => {
+    if (blocks.length <= 1) {
+      Alert.alert('Atenção', 'Precisa ter pelo menos 1 bloco de horário');
+      return;
+    }
+    setBlocks(blocks.filter((_, i) => i !== index));
+  };
+
+  const updateBlock = (index: number, field: 'start' | 'end', value: string) => {
+    const newBlocks = [...blocks];
+    newBlocks[index] = { ...newBlocks[index], [field]: value };
+    setBlocks(newBlocks);
+  };
+
+  const toggleDay = (day: number) => {
+    if (selectedDays.includes(day)) {
+      setSelectedDays(selectedDays.filter(d => d !== day));
+    } else {
+      setSelectedDays([...selectedDays, day]);
+    }
+  };
+
+  const selectAllDays = () => {
+    setSelectedDays([0, 1, 2, 3, 4, 5, 6]);
+  };
+
+  const selectWeekDays = () => {
+    setSelectedDays([0, 1, 2, 3, 4]);
+  };
+
+  const updateStartDateFromText = (text: string) => {
+    setStartDateText(text);
+    const parsed = parseDate(text);
+    if (parsed) {
+      setStartDate(parsed);
+      if (batchType === 'week') {
+        const weekDates = getWeekDates(parsed);
+        const end = weekDates[6];
+        setEndDate(end);
+        setEndDateText(formatDate(end));
+      } else if (batchType === 'month') {
+        const monthDates = getMonthDates(parsed);
+        const end = monthDates[monthDates.length - 1];
+        setEndDate(end);
+        setEndDateText(formatDate(end));
+      }
+    }
+  };
+
+  const updateEndDateFromText = (text: string) => {
+    setEndDateText(text);
+    const parsed = parseDate(text);
+    if (parsed) {
+      setEndDate(parsed);
+    }
+  };
+
+  const handleBatchSave = async () => {
+    if (selectedDays.length === 0) {
+      Alert.alert('Erro', 'Selecione pelo menos um dia da semana');
+      return;
+    }
+
+    for (let i = 0; i < blocks.length; i++) {
+      if (blocks[i].start >= blocks[i].end) {
+        Alert.alert('Erro', `Bloco ${i + 1}: Horário inicial deve ser antes do final`);
+        return;
+      }
+    }
+
+    let dates: Date[] = [];
+    
+    if (batchType === 'week') {
+      dates = getWeekDates(startDate);
+    } else if (batchType === 'month') {
+      dates = getMonthDates(startDate);
+    } else {
+      dates = getDatesBetween(startDate, endDate);
+    }
+
+    const daysToCreate = dates.filter(date => selectedDays.includes(getDayOfWeek(date)));
+
+    Alert.alert(
+      'Confirmar Criação em Lote',
+      `Você está prestes a criar horários para:\n` +
+      `📅 Período: ${startDateText} até ${endDateText}\n` +
+      `📆 Dias selecionados: ${selectedDays.map(d => DAYS[d].short).join(', ')}\n` +
+      `📊 Total de dias: ${daysToCreate.length}\n\n` +
+      `Deseja continuar?`,
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Criar',
+          onPress: async () => {
+            setSaving(true);
+            try {
+              let created = 0;
+              let errors = 0;
+
+              for (const date of daysToCreate) {
+                const dayOfWeek = getDayOfWeek(date);
+                const dateStr = formatDateAPI(date);
+                
+                for (const block of blocks) {
+                  try {
+                    await api.post('/schedule/', {
+                      day_of_week: dayOfWeek,
+                      start_time: block.start,
+                      end_time: block.end,
+                      slot_duration_minutes: slotDuration,
+                      recurrence_type: 'weekly',
+                      specific_date: dateStr,
+                    });
+                    created++;
+                  } catch (err) {
+                    errors++;
+                    console.error(`Erro ao criar para ${dateStr}:`, err);
+                  }
+                }
+              }
+
+              Alert.alert(
+                'Sucesso',
+                `✅ ${created} horários criados\n` +
+                (errors > 0 ? `❌ ${errors} erros` : ''),
+                [{ text: 'OK', onPress: () => {
+                  setShowBatchModal(false);
+                  loadSchedules();
+                }}]
+              );
+            } catch (err: any) {
+              const msg = err?.response?.data?.detail || 'Erro ao criar em lote';
+              Alert.alert('Erro', msg);
+            } finally {
+              setSaving(false);
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleSave = async () => {
+    for (let i = 0; i < blocks.length; i++) {
+      if (blocks[i].start >= blocks[i].end) {
+        Alert.alert('Erro', `Bloco ${i + 1}: Horário inicial deve ser antes do final`);
+        return;
+      }
+    }
+
+    setSaving(true);
+    try {
+      const existingForDay = schedules.filter(s => s.day_of_week === selectedDay);
+      for (const existing of existingForDay) {
+        await api.delete(`/schedule/${existing.id}`);
+      }
+
+      for (const block of blocks) {
+        await api.post('/schedule/', {
+          day_of_week: selectedDay,
+          start_time: block.start,
+          end_time: block.end,
+          slot_duration_minutes: slotDuration,
+          recurrence_type: 'weekly',
+        });
+      }
+
+      Alert.alert('Sucesso', `Horários de ${DAYS[selectedDay].label} salvos!`);
+      setShowModal(false);
+      await loadSchedules();
+    } catch (err: any) {
+      const msg = err?.response?.data?.detail || 'Erro ao salvar';
+      Alert.alert('Erro', msg);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteDay = (dayKey: number) => {
+    const daySchedules = schedules.filter(s => s.day_of_week === dayKey);
+    if (daySchedules.length === 0) return;
+
+    Alert.alert(
+      'Remover dia',
+      `Remover todos os horários de ${DAYS[dayKey].label}?`,
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Remover',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              for (const s of daySchedules) {
+                await api.delete(`/schedule/${s.id}`);
+              }
+              await loadSchedules();
+            } catch (err) {
+              Alert.alert('Erro', 'Falha ao remover');
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  const handleClearAll = () => {
+    Alert.alert('Limpar tudo', 'Remover todos os horários da agenda?', [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Limpar',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            await api.delete('/schedule/');
+            await loadSchedules();
+          } catch (err) {
+            Alert.alert('Erro', 'Falha ao limpar');
+          }
+        },
+      },
+    ]);
+  };
+
+  const handleQuickSetup = () => {
+    Alert.alert(
+      'Configuração Rápida',
+      'Configurar Seg-Sex, 09:00-12:00 e 14:00-20:00 (com almoço)?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Configurar',
+          onPress: async () => {
+            setSaving(true);
+            try {
+              await api.delete('/schedule/');
+              for (let day = 0; day <= 4; day++) {
+                await api.post('/schedule/', {
+                  day_of_week: day,
+                  start_time: '09:00',
+                  end_time: '12:00',
+                  slot_duration_minutes: 30,
+                  recurrence_type: 'weekly',
+                });
+                await api.post('/schedule/', {
+                  day_of_week: day,
+                  start_time: '14:00',
+                  end_time: '20:00',
+                  slot_duration_minutes: 30,
+                  recurrence_type: 'weekly',
+                });
+              }
+              Alert.alert('Sucesso', 'Agenda configurada: Seg-Sex, 09-12h e 14-20h');
+              await loadSchedules();
+            } catch (err) {
+              Alert.alert('Erro', 'Falha na configuração');
+            } finally {
+              setSaving(false);
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.center]}>
+        <ActivityIndicator size="large" color="#1A73E8" />
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* Header com navegação */}
+      <View style={[styles.header, { paddingTop: insets.top }]}>
+        <View style={styles.headerTop}>
+          <Text style={styles.headerTitle}>Agenda</Text>
+          <View style={styles.viewModeToggle}>
+            <TouchableOpacity
+              style={[styles.viewModeBtn, viewMode === 'week' && styles.viewModeActive]}
+              onPress={() => setViewMode('week')}
+            >
+              <Text style={[styles.viewModeText, viewMode === 'week' && styles.viewModeTextActive]}>Semana</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.viewModeBtn, viewMode === 'month' && styles.viewModeActive]}
+              onPress={() => setViewMode('month')}
+            >
+              <Text style={[styles.viewModeText, viewMode === 'month' && styles.viewModeTextActive]}>Mês</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.navigationRow}>
+          <TouchableOpacity onPress={navigatePrevious} style={styles.navBtn}>
+            <Ionicons name="chevron-back" size={24} color="#f78504" />
+          </TouchableOpacity>
+          
+          <Text style={styles.navTitle}>
+            {viewMode === 'week' 
+              ? `${formatDate(displayDates[0] || currentDate)} - ${formatDate(displayDates[6] || currentDate)}`
+              : currentDate.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' }).replace(/^[a-z]/, l => l.toUpperCase())
+            }
+          </Text>
+          
+          <TouchableOpacity onPress={navigateNext} style={styles.navBtn}>
+            <Ionicons name="chevron-forward" size={24} color="#f78504" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Quick actions */}
+        <View style={styles.actionsRow}>
+          <TouchableOpacity style={styles.quickSetupBtn} onPress={handleQuickSetup}>
+            <Ionicons name="flash" size={13} color="#FFF" />
+            <Text style={styles.quickSetupText}>Config. Rápida</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.batchSetupBtn} onPress={() => setShowBatchModal(true)}>
+            <Ionicons name="calendar" size={18} color="#FFF" />
+            <Text style={styles.batchSetupText}>Criar em Lote</Text>
+          </TouchableOpacity>
+          
+          {schedules.length > 0 && (
+            <TouchableOpacity style={styles.clearBtn} onPress={handleClearAll}>
+              <Ionicons name="trash-outline" size={16} color="#FF3B30" />
+              <Text style={styles.clearBtnText}>Limpar</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+        {/* Visualização */}
+        {viewMode === 'week' ? (
+          // Visualização Semanal - Formato de Lista
+          <View style={styles.weekList}>
+            {displayDates.map((date, index) => {
+              const daySchedules = getScheduleForDate(date);
+              const isToday = date.toDateString() === new Date().toDateString();
+              const dayName = getDayName(date);
+              
+              return (
+                <TouchableOpacity
+                  key={index}
+                  style={[styles.weekListItem, isToday && styles.todayItem]}
+                  onPress={() => openAddForDate(date)}
+                >
+                  <View style={styles.weekListItemHeader}>
+                    <View style={styles.weekListItemLeft}>
+                      <Text style={[styles.weekListItemDay, isToday && styles.todayText]}>{dayName}</Text>
+                      <Text style={[styles.weekListItemDate, isToday && styles.todayText]}>{formatDate(date)}</Text>
+                    </View>
+                    <Ionicons name="chevron-forward" size={20} color="#1A73E8" />
+                  </View>
+                  
+                  {daySchedules.length === 0 ? (
+                    <Text style={styles.weekListEmpty}>Nenhum horário configurado</Text>
+                  ) : (
+                    <View style={styles.weekListSchedules}>
+                      {daySchedules.map((schedule: any, idx: number) => (
+                        <View key={idx} style={styles.weekListScheduleItem}>
+                          <View style={styles.weekListScheduleTime}>
+                            <Ionicons name="time-outline" size={14} color="#f78504" />
+                            <Text style={styles.weekListScheduleTimeText}>
+                              {schedule.start_time} - {schedule.end_time}
+                            </Text>
+                          </View>
+                          <Text style={styles.weekListScheduleDuration}>
+                            {schedule.slot_duration_minutes}min
+                          </Text>
+                        </View>
+                      ))}
+                    </View>
+                  )}
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        ) : (
+          // Visualização Mensal - Grade
+          <View style={styles.monthGrid}>
+            {/* Cabeçalho dos dias da semana */}
+            <View style={styles.weekDaysHeader}>
+              {DAYS.map(day => (
+                <View key={day.key} style={styles.weekDayCell}>
+                  <Text style={styles.weekDayText}>{day.short}</Text>
+                </View>
+              ))}
+            </View>
+
+            {/* Dias do mês */}
+            {groupedWeeks.map((week, weekIndex) => (
+              <View key={weekIndex} style={styles.weekRow}>
+                {DAYS.map((day, dayIndex) => {
+                  const date = week[dayIndex];
+                  if (!date) {
+                    return <View key={`empty-${dayIndex}`} style={styles.monthDayCell} />;
+                  }
+                  
+                  const daySchedules = getScheduleForDate(date);
+                  const isToday = date.toDateString() === new Date().toDateString();
+                  
+                  return (
+                    <TouchableOpacity
+                      key={dayIndex}
+                      style={[styles.monthDayCell, isToday && styles.todayCell]}
+                      onPress={() => openAddForDate(date)}
+                    >
+                      <Text style={[styles.monthDayNumber, isToday && styles.todayText]}>{date.getDate()}</Text>
+                      
+                      {daySchedules.length > 0 && (
+                        <View style={styles.monthDayIndicator}>
+                          <View style={styles.monthDayIndicatorDot} />
+                          <Text style={styles.monthDayIndicatorText}>
+                            {daySchedules.length} bloco{daySchedules.length > 1 ? 's' : ''}
+                          </Text>
+                        </View>
+                      )}
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            ))}
+          </View>
+        )}
+      </ScrollView>
+
+      {/* Batch Creation Modal (mantido igual) */}
+      <Modal visible={showBatchModal} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setShowBatchModal(false)}>
+        <View style={[styles.modalContainer, { paddingTop: insets.top + 16 }]}>
+          <View style={styles.modalHeader}>
+            <TouchableOpacity onPress={() => setShowBatchModal(false)}>
+              <Text style={styles.modalCancel}>Cancelar</Text>
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Criar Agenda em Lote</Text>
+            <TouchableOpacity onPress={handleBatchSave} disabled={saving}>
+              {saving ? <ActivityIndicator size="small" color="#1A73E8" /> : <Text style={styles.modalSave}>Criar</Text>}
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView style={styles.modalScroll} contentContainerStyle={styles.modalContent}>
+            {/* Tipo de lote */}
+            <Text style={styles.sectionTitle}>Tipo de Período</Text>
+            <View style={styles.batchTypeRow}>
+              <TouchableOpacity
+                style={[styles.batchTypeBtn, batchType === 'week' && styles.batchTypeActive]}
+                onPress={() => {
+                  setBatchType('week');
+                  const weekDates = getWeekDates(startDate);
+                  const end = weekDates[6];
+                  setEndDate(end);
+                  setEndDateText(formatDate(end));
+                }}
+              >
+                <Text style={[styles.batchTypeText, batchType === 'week' && styles.batchTypeTextActive]}>Semana</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.batchTypeBtn, batchType === 'month' && styles.batchTypeActive]}
+                onPress={() => {
+                  setBatchType('month');
+                  const monthDates = getMonthDates(startDate);
+                  const end = monthDates[monthDates.length - 1];
+                  setEndDate(end);
+                  setEndDateText(formatDate(end));
+                }}
+              >
+                <Text style={[styles.batchTypeText, batchType === 'month' && styles.batchTypeTextActive]}>Mês</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.batchTypeBtn, batchType === 'custom' && styles.batchTypeActive]}
+                onPress={() => setBatchType('custom')}
+              >
+                <Text style={[styles.batchTypeText, batchType === 'custom' && styles.batchTypeTextActive]}>Personalizado</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Seleção de datas */}
+            <Text style={styles.sectionTitle}>Período</Text>
+            
+            <TouchableOpacity style={styles.datePickerBtn} onPress={() => setShowStartPicker(true)}>
+              <Ionicons name="calendar-outline" size={20} color="#1A73E8" />
+              <Text style={styles.datePickerText}>
+                Data Inicial: {startDateText}
+              </Text>
+            </TouchableOpacity>
+
+            {showStartPicker && (
+              <View style={styles.dateInputModal}>
+                <Text style={styles.dateInputLabel}>Digite a data inicial (DD/MM/AAAA):</Text>
+                <TextInput
+                  style={styles.dateInput}
+                  value={startDateText}
+                  onChangeText={updateStartDateFromText}
+                  placeholder="DD/MM/AAAA"
+                  keyboardType="numeric"
+                  autoFocus
+                />
+                <TouchableOpacity
+                  style={styles.dateInputDone}
+                  onPress={() => setShowStartPicker(false)}
+                >
+                  <Text style={styles.dateInputDoneText}>OK</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {batchType === 'custom' && (
+              <>
+                <TouchableOpacity style={styles.datePickerBtn} onPress={() => setShowEndPicker(true)}>
+                  <Ionicons name="calendar-outline" size={20} color="#1A73E8" />
+                  <Text style={styles.datePickerText}>
+                    Data Final: {endDateText}
+                  </Text>
+                </TouchableOpacity>
+
+                {showEndPicker && (
+                  <View style={styles.dateInputModal}>
+                    <Text style={styles.dateInputLabel}>Digite a data final (DD/MM/AAAA):</Text>
+                    <TextInput
+                      style={styles.dateInput}
+                      value={endDateText}
+                      onChangeText={updateEndDateFromText}
+                      placeholder="DD/MM/AAAA"
+                      keyboardType="numeric"
+                      autoFocus
+                    />
+                    <TouchableOpacity
+                      style={styles.dateInputDone}
+                      onPress={() => setShowEndPicker(false)}
+                    >
+                      <Text style={styles.dateInputDoneText}>OK</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </>
+            )}
+
+            {/* Seleção de dias da semana */}
+            <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Dias da Semana</Text>
+            
+            <View style={styles.daysSelectionRow}>
+              <TouchableOpacity style={styles.daysActionBtn} onPress={selectWeekDays}>
+                <Text style={styles.daysActionText}>Seg-Sex</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.daysActionBtn} onPress={selectAllDays}>
+                <Text style={styles.daysActionText}>Todos</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.daysGrid}>
+              {DAYS.map(day => (
+                <TouchableOpacity
+                  key={day.key}
+                  style={[
+                    styles.daySelectBtn,
+                    selectedDays.includes(day.key) && styles.daySelectBtnActive,
+                  ]}
+                  onPress={() => toggleDay(day.key)}
+                >
+                  <Text
+                    style={[
+                      styles.daySelectText,
+                      selectedDays.includes(day.key) && styles.daySelectTextActive,
+                    ]}
+                  >
+                    {day.short}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Blocos de horário */}
+            <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Blocos de Horário</Text>
+            <Text style={styles.sectionHint}>Os mesmos horários serão aplicados a todos os dias selecionados</Text>
+
+            {blocks.map((block, idx) => (
+              <View key={idx} style={styles.blockCard}>
+                <View style={styles.blockCardHeader}>
+                  <Text style={styles.blockCardTitle}>
+                    {idx === 0 ? 'Manhã / Período 1' : idx === 1 ? 'Tarde / Período 2' : `Período ${idx + 1}`}
+                  </Text>
+                  {blocks.length > 1 && (
+                    <TouchableOpacity onPress={() => removeBlock(idx)}>
+                      <Ionicons name="close-circle" size={22} color="#FF3B30" />
+                    </TouchableOpacity>
+                  )}
+                </View>
+
+                <Text style={styles.fieldLabel}>Início</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <View style={styles.timeRow}>
+                    {TIME_OPTIONS.map(t => (
+                      <TouchableOpacity
+                        key={`s-${idx}-${t}`}
+                        style={[styles.timeChip, block.start === t && styles.timeChipActive]}
+                        onPress={() => updateBlock(idx, 'start', t)}
+                      >
+                        <Text style={[styles.timeChipText, block.start === t && styles.timeChipTextActive]}>{t}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </ScrollView>
+
+                <Text style={styles.fieldLabel}>Término</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                  <View style={styles.timeRow}>
+                    {TIME_OPTIONS.map(t => (
+                      <TouchableOpacity
+                        key={`e-${idx}-${t}`}
+                        style={[styles.timeChip, block.end === t && styles.timeChipActive]}
+                        onPress={() => updateBlock(idx, 'end', t)}
+                      >
+                        <Text style={[styles.timeChipText, block.end === t && styles.timeChipTextActive]}>{t}</Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </ScrollView>
+              </View>
+            ))}
+
+            <TouchableOpacity style={styles.addBlockBtn} onPress={addBlock}>
+              <Ionicons name="add-circle-outline" size={20} color="#1A73E8" />
+              <Text style={styles.addBlockText}>Adicionar Bloco</Text>
+            </TouchableOpacity>
+
+            {/* Duração do slot */}
+            <Text style={[styles.sectionTitle, { marginTop: 24 }]}>Duração do Slot</Text>
+            <View style={styles.durationGrid}>
+              {DURATION_OPTIONS.map(d => (
+                <TouchableOpacity
+                  key={d}
+                  style={[styles.durationChip, slotDuration === d && styles.durationChipActive]}
+                  onPress={() => setSlotDuration(d)}
+                >
+                  <Text style={[styles.durationText, slotDuration === d && styles.durationTextActive]}>{d} min</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            {/* Preview */}
+            <View style={styles.previewBox}>
+              <Text style={styles.previewTitle}>Resumo da Criação</Text>
+              <Text style={styles.previewText}>
+                📅 Período: {startDateText} até {endDateText}
+              </Text>
+              <Text style={styles.previewText}>
+                📆 Dias: {selectedDays.map(d => DAYS[d].short).join(', ')}
+              </Text>
+              <Text style={styles.previewText}>
+                ⏰ Horários: {blocks.map(b => `${b.start}-${b.end}`).join(', ')}
+              </Text>
+              <Text style={styles.previewText}>
+                ⏱️ Duração: {slotDuration}min por slot
+              </Text>
+              <Text style={styles.previewLunch}>
+                📊 Total estimado: {(() => {
+                  const dates = batchType === 'week' ? getWeekDates(startDate) :
+                              batchType === 'month' ? getMonthDates(startDate) :
+                              getDatesBetween(startDate, endDate);
+                  const daysToCreate = dates.filter(date => selectedDays.includes(getDayOfWeek(date)));
+                  return `${daysToCreate.length} dias × ${blocks.length} blocos = ${daysToCreate.length * blocks.length} registros`;
+                })()}
+              </Text>
+            </View>
+          </ScrollView>
+        </View>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal visible={showModal} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setShowModal(false)}>
+        <View style={[styles.modalContainer, { paddingTop: insets.top + 16 }]}>
+          <View style={styles.modalHeader}>
+            <TouchableOpacity onPress={() => setShowModal(false)}>
+              <Text style={styles.modalCancel}>Cancelar</Text>
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>
+              {selectedDate ? formatDate(selectedDate) : DAYS[selectedDay]?.label}
+            </Text>
             <TouchableOpacity onPress={handleSave} disabled={saving}>
               {saving ? <ActivityIndicator size="small" color="#1A73E8" /> : <Text style={styles.modalSave}>Salvar</Text>}
             </TouchableOpacity>
@@ -416,46 +1536,367 @@ export default function ScheduleScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8F9FA' },
+  container: { flex: 1, backgroundColor: '#1a1818' },
   center: { justifyContent: 'center', alignItems: 'center' },
-  header: { paddingHorizontal: 20, paddingVertical: 16, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
-  headerTitle: { fontSize: 24, fontWeight: '800', color: '#333' },
-  headerSubtitle: { fontSize: 13, color: '#666', marginTop: 4 },
+  
+  header: {
+    backgroundColor: '#1a1818',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E8E8E8',
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+  },
+  headerTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  headerTitle: {
+    fontSize: 24,
+    fontWeight: '800',
+    color: '#FFF',
+  },
+  viewModeToggle: {
+    flexDirection: 'row',
+    backgroundColor: '#F0F0F0',
+    borderRadius: 8,
+    padding: 2,
+  },
+  viewModeBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+  },
+  viewModeActive: {
+    backgroundColor: '#f78504',
+  },
+  viewModeText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#666',
+  },
+  viewModeTextActive: {
+    color: '#FFF',
+  },
+  navigationRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  navBtn: {
+    padding: 8,
+  },
+  navTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFF',
+  },
+  actionsRow: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    gap: 8,
+  },
+  quickSetupBtn: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    backgroundColor: '#f78504', 
+    paddingHorizontal: 14, 
+    paddingVertical: 10, 
+    borderRadius: 10, 
+    gap: 6,
+    flex: 1,
+  },
+  quickSetupText: { color: '#FFF', fontWeight: '700', fontSize: 13 },
+  batchSetupBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#34C759',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 10,
+    gap: 6,
+    flex: 1,
+  },
+  batchSetupText: { color: '#FFF', fontWeight: '700', fontSize: 13 },
+  clearBtn: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    paddingHorizontal: 12, 
+    paddingVertical: 8, 
+    borderRadius: 8, 
+    borderWidth: 1, 
+    borderColor: '#FF3B30', 
+    gap: 4,
+  },
+  clearBtnText: { color: '#FF3B30', fontWeight: '600', fontSize: 13 },
+
   scrollView: { flex: 1 },
   scrollContent: { padding: 16, paddingBottom: 40 },
 
-  actionsRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 16 },
-  quickSetupBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#1A73E8', paddingHorizontal: 14, paddingVertical: 10, borderRadius: 10, gap: 6 },
-  quickSetupText: { color: '#FFF', fontWeight: '700', fontSize: 13 },
-  clearBtn: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1, borderColor: '#FF3B30', gap: 4 },
-  clearBtnText: { color: '#FF3B30', fontWeight: '600', fontSize: 13 },
+  // Visualização Semanal em Lista
+  weekList: {
+    gap: 12,
+  },
+  weekListItem: {
+    backgroundColor: '#FFF',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#E8E8E8',
+  },
+  todayItem: {
+    backgroundColor: '#E8F0FE',
+    borderColor: '#1A73E8',
+  },
+  weekListItemHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  weekListItemLeft: {
+    flex: 1,
+  },
+  weekListItemDay: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 2,
+  },
+  weekListItemDate: {
+    fontSize: 13,
+    color: '#666',
+  },
+  weekListEmpty: {
+    fontSize: 13,
+    color: '#999',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    paddingVertical: 8,
+  },
+  weekListSchedules: {
+    gap: 8,
+  },
+  weekListScheduleItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#F5F5F5',
+    padding: 10,
+    borderRadius: 8,
+  },
+  weekListScheduleTime: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  weekListScheduleTimeText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+  },
+  weekListScheduleDuration: {
+    fontSize: 12,
+    color: '#f78504',
+    fontWeight: '600',
+  },
 
-  dayCard: { backgroundColor: '#FFF', borderRadius: 12, padding: 14, marginBottom: 10, borderWidth: 1, borderColor: '#E8E8E8' },
-  dayHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  dayLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  dayBadge: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 6 },
-  dayBadgeActive: { backgroundColor: '#1A73E8' },
-  dayBadgeInactive: { backgroundColor: '#CCC' },
-  dayBadgeText: { color: '#FFF', fontWeight: '700', fontSize: 12 },
-  dayLabel: { fontSize: 15, fontWeight: '600', color: '#333' },
-  dayActions: { flexDirection: 'row', gap: 8 },
-  dayDeleteBtn: { padding: 6 },
-  dayEditBtn: { padding: 6, backgroundColor: '#E8F0FE', borderRadius: 6 },
+  // Visualização Mensal em Grade
+  monthGrid: {
+    backgroundColor: '#FFF',
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  weekDaysHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#F5F5F5',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E8E8E8',
+  },
+  weekDayCell: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  weekDayText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#666',
+  },
+  weekRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  monthDayCell: {
+    flex: 1,
+    aspectRatio: 1,
+    padding: 8,
+    borderWidth: 0.5,
+    borderColor: '#F0F0F0',
+    justifyContent: 'space-between',
+  },
+  todayCell: {
+    backgroundColor: '#E8F0FE',
+  },
+  monthDayNumber: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+  },
+  todayText: {
+    color: '#1A73E8',
+  },
+  monthDayIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  monthDayIndicatorDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#1A73E8',
+  },
+  monthDayIndicatorText: {
+    fontSize: 8,
+    color: '#666',
+  },
 
-  dayEmpty: { marginTop: 8, paddingVertical: 8 },
-  dayEmptyText: { fontSize: 13, color: '#999', fontStyle: 'italic' },
-
-  blocksContainer: { marginTop: 10, gap: 4 },
-  blockRow: { paddingVertical: 4 },
-  blockTime: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  blockTimeText: { fontSize: 14, fontWeight: '600', color: '#333' },
-  blockMeta: { fontSize: 11, color: '#999', marginLeft: 20, marginTop: 2 },
-  lunchIndicator: { flexDirection: 'row', alignItems: 'center', gap: 4, marginLeft: 20, marginTop: 4, marginBottom: 2 },
-  lunchText: { fontSize: 11, color: '#FF9500', fontStyle: 'italic' },
+  // Batch Modal Styles
+  batchTypeRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 16,
+  },
+  batchTypeBtn: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#DDD',
+    alignItems: 'center',
+  },
+  batchTypeActive: {
+    backgroundColor: '#1A73E8',
+    borderColor: '#1A73E8',
+  },
+  batchTypeText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#666',
+  },
+  batchTypeTextActive: {
+    color: '#FFF',
+  },
+  datePickerBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    padding: 12,
+    backgroundColor: '#FFF',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#DDD',
+    marginBottom: 8,
+  },
+  datePickerText: {
+    fontSize: 14,
+    color: '#333',
+  },
+  dateInputModal: {
+    backgroundColor: '#FFF',
+    padding: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#1A73E8',
+    marginBottom: 16,
+  },
+  dateInputLabel: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 8,
+  },
+  dateInput: {
+    borderWidth: 1,
+    borderColor: '#DDD',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    marginBottom: 12,
+  },
+  dateInputDone: {
+    backgroundColor: '#1A73E8',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  dateInputDoneText: {
+    color: '#FFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  daysSelectionRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 12,
+  },
+  daysActionBtn: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: '#E8F0FE',
+    borderRadius: 6,
+  },
+  daysActionText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#1A73E8',
+  },
+  daysGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginBottom: 16,
+  },
+  daySelectBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#DDD',
+    minWidth: 50,
+    alignItems: 'center',
+  },
+  daySelectBtnActive: {
+    backgroundColor: '#1A73E8',
+    borderColor: '#1A73E8',
+  },
+  daySelectText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#666',
+  },
+  daySelectTextActive: {
+    color: '#FFF',
+  },
 
   // Modal
   modalContainer: { flex: 1, backgroundColor: '#F8F9FA' },
-  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingBottom: 16, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
+  modalHeader: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    paddingHorizontal: 16, 
+    paddingBottom: 16, 
+    backgroundColor: '#FFF', 
+    borderBottomWidth: 1, 
+    borderBottomColor: '#E8E8E8' 
+  },
   modalCancel: { fontSize: 16, color: '#666' },
   modalTitle: { fontSize: 17, fontWeight: '700', color: '#333' },
   modalSave: { fontSize: 16, fontWeight: '700', color: '#1A73E8' },

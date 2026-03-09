@@ -206,7 +206,7 @@ export default function Profile() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#1a1818',
   },
   content: {
     padding: 16,
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   roleBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#007AFF',
+    backgroundColor: '#f78504',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#FFF',
     marginBottom: 12,
     paddingHorizontal: 4,
   },

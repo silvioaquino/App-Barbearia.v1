@@ -136,15 +136,15 @@ function StatCard({ icon, color, value, label }) {
 }
 
 const s = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F5F5F5' },
+  container: { flex: 1, backgroundColor: '#1a1818' },
   header: { padding: 20, paddingBottom: 8 },
   title: { fontSize: 22, fontWeight: '700', color: '#333' },
   periodBar: { flexDirection: 'row', marginHorizontal: 16, marginBottom: 16, backgroundColor: '#E8E8E8', borderRadius: 10, padding: 3 },
   periodBtn: { flex: 1, paddingVertical: 10, borderRadius: 8, alignItems: 'center' },
-  periodActive: { backgroundColor: '#007AFF' },
+  periodActive: { backgroundColor: '#f78504' },
   periodText: { fontSize: 14, fontWeight: '600', color: '#666' },
   periodTextActive: { color: '#FFF' },
-  revenueCard: { margin: 16, marginTop: 0, backgroundColor: '#007AFF', borderRadius: 16, padding: 20 },
+  revenueCard: { margin: 16, marginTop: 0, backgroundColor: '#f78504', borderRadius: 16, padding: 20 },
   revenueLabel: { color: 'rgba(255,255,255,0.7)', fontSize: 14 },
   revenueValue: { color: '#FFF', fontSize: 32, fontWeight: '800', marginTop: 4 },
   revenueBreakdown: { flexDirection: 'row', gap: 16, marginTop: 12 },
@@ -160,7 +160,7 @@ const s = StyleSheet.create({
   chart: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'flex-end' },
   barCol: { alignItems: 'center', flex: 1 },
   barContainer: { height: 120, justifyContent: 'flex-end' },
-  bar: { width: 24, backgroundColor: '#007AFF', borderRadius: 4, overflow: 'hidden', justifyContent: 'flex-end' },
+  bar: { width: 24, backgroundColor: '#f78504', borderRadius: 4, overflow: 'hidden', justifyContent: 'flex-end' },
   barSegment: { width: '100%', borderRadius: 0 },
   barValue: { fontSize: 10, color: '#999', marginBottom: 2 },
   barLabel: { fontSize: 12, color: '#666', marginTop: 4, fontWeight: '600' },

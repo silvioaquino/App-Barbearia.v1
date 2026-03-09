@@ -7,6 +7,7 @@ import {
   Alert,
   Platform,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { useAuth } from '../src/contexts/AuthContext';
 import { useRouter } from 'expo-router';
@@ -35,17 +36,18 @@ export default function Login() {
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.icon}>💈</Text>
-          <Text style={styles.title}>Barbershop Manager</Text>
+          <Text style={styles.title}>Barbearia D'Ferr</Text>
           <Text style={styles.subtitle}>
             Gerencie sua barbearia de forma simples e eficiente
           </Text>
-        </View>
+        </View> 
 
         <View style={styles.features}>
-          <FeatureItem icon="📅" text="Gerenciar agendamentos" />
-          <FeatureItem icon="✂️" text="Controlar serviços" />
-          <FeatureItem icon="💰" text="Controle de caixa" />
-          <FeatureItem icon="📊" text="Relatórios financeiros" />
+          <Image
+            source={require('../assets/images/logotype.png')} // Ajuste o caminho conforme necessário
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </View>
 
         <View style={styles.footer}>
@@ -55,7 +57,7 @@ export default function Login() {
             loading={loading}
           />
 
-          <View style={styles.divider}>
+          {/*<View style={styles.divider}>
             <View style={styles.dividerLine} />
             <Text style={styles.dividerText}>ou</Text>
             <View style={styles.dividerLine} />
@@ -77,7 +79,7 @@ export default function Login() {
               <Ionicons name="settings-outline" size={16} color="#1A73E8" />
               <Text style={styles.serverConfigText}>Configurar Servidor Local</Text>
             </TouchableOpacity>
-          )}
+          )}*/}
         </View>
       </View>
     </SafeAreaView>
@@ -96,7 +98,7 @@ function FeatureItem({ icon, text }: { icon: string; text: string }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#000',
   },
   content: {
     flex: 1,
@@ -109,19 +111,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    fontSize: 80,
+    fontSize: 60,
     marginBottom: 20,
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#f78504',
     marginBottom: 12,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#FFF',
     textAlign: 'center',
     lineHeight: 24,
   },
@@ -146,7 +148,8 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   footer: {
-    marginTop: 40,
+    marginTop: 20,
+    marginBottom: 70,
   },
   divider: {
     flexDirection: 'row',

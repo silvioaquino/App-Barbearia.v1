@@ -266,7 +266,7 @@ export default function Cash() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#1a1818',
   },
   content: {
     padding: 16,

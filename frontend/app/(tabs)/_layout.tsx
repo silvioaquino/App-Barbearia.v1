@@ -126,13 +126,13 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#000',
+        tabBarActiveTintColor: '#f78504',
         tabBarInactiveTintColor: '#FFF',
         tabBarStyle: {
           height: Platform.OS === 'android' ? 60 + insets.bottom : 60,
           paddingBottom: Platform.OS === 'android' ? insets.bottom : 18,
           paddingTop: 8,
-          backgroundColor: '#007AFF',
+          backgroundColor: '#000',
           // Garantir que a tab bar fique acima dos botões do sistema
           elevation: 8,
           shadowColor: '#000',
@@ -142,7 +142,7 @@ export default function TabsLayout() {
         },
         headerShown: true,
         headerStyle: {
-          backgroundColor: '#007AFF',
+          backgroundColor: '#000',
         },
         headerTintColor: '#fff',
         headerTitleStyle: {
@@ -154,6 +154,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: 'Dashboard',
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
@@ -163,6 +164,7 @@ export default function TabsLayout() {
         name="appointments"
         options={{
           title: 'Agendamentos',
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="calendar" size={size} color={color} />
           ),
@@ -172,6 +174,7 @@ export default function TabsLayout() {
         name="services"
         options={{
           title: 'Serviços',
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="cut" size={size} color={color} />
           ),
@@ -181,6 +184,7 @@ export default function TabsLayout() {
         name="products"
         options={{
           title: 'Produtos',
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="cube" size={size} color={color} />
           ),
@@ -190,6 +194,7 @@ export default function TabsLayout() {
         name="cash"
         options={{
           title: 'Caixa',
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="cash" size={size} color={color} />
           ),
@@ -229,6 +234,7 @@ export default function TabsLayout() {
         name="profile"
         options={{
           title: 'Perfil',
+          headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person" size={size} color={color} />
           ),

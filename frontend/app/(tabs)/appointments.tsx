@@ -139,7 +139,7 @@ export default function Appointments() {
           onPress={() => setFilter('pending')}
         />
         <FilterButton
-          title="Confirmados"
+          title="Confirmado"
           active={filter === 'confirmed'}
           onPress={() => setFilter('confirmed')}
         />
@@ -203,7 +203,7 @@ export default function Appointments() {
 
             {(item.service_name || item.service_price) && (
               <View style={styles.serviceInfo}>
-                <Ionicons name="cut-outline" size={16} color="#1A73E8" />
+                <Ionicons name="cut-outline" size={16} color="#f78504" />
                 <Text style={styles.serviceName}>{item.service_name || 'Serviço'}</Text>
                 {item.service_price != null && (
                   <Text style={styles.servicePrice}>
@@ -266,12 +266,12 @@ function FilterButton({ title, active, onPress }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#1a1818',
   },
   filterBar: {
     flexDirection: 'row',
     padding: 12,
-    backgroundColor: '#FFF',
+    backgroundColor: '#1a1818',
     borderBottomWidth: 1,
     borderBottomColor: '#E0E0E0',
   },
@@ -279,17 +279,17 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 8,
     paddingHorizontal: 12,
-    marginHorizontal: 4,
+    marginHorizontal: 1,
     borderRadius: 8,
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
   },
   filterButtonActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#f78504',
   },
   filterText: {
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 11,
+    fontWeight: '900',
     color: '#666',
   },
   filterTextActive: {
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
   appointmentTime: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#007AFF',
+    color: '#f78504',
   },
   statusBadge: {
     paddingHorizontal: 12,
@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   clientText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#333',
     fontWeight: '500',
   },
@@ -365,9 +365,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   serviceName: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
-    color: '#1A73E8',
+    color: '#f78504',
     flex: 1,
   },
   servicePrice: {

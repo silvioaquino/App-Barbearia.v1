@@ -180,7 +180,7 @@ function StatCard({ icon, title, value, color }: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#1a1818',
   },
   content: {
     padding: 16,
@@ -191,17 +191,18 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#FFF',
     marginBottom: 4,
   },
   welcomeSubtext: {
     fontSize: 16,
-    color: '#666',
+    color: '#10f708',
   },
   statsGrid: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 16,
+    color: '#000',
   },
   statCard: {
     flex: 1,
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   warningCard: {
-    backgroundColor: '#FFF3E0',
+    backgroundColor: '#FFF',
   },
   warning: {
     flexDirection: 'row',

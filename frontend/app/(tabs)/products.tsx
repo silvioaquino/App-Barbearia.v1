@@ -116,7 +116,7 @@ export default function Products() {
           onPress={openAdd}
           style={styles.addButton}
         />
-  }
+        }
         ListEmptyComponent={
           <View style={styles.empty}>
             <Ionicons name="cube-outline" size={64} color="#CCC" />
@@ -159,7 +159,7 @@ export default function Products() {
                 </TouchableOpacity>
               )}
               <TouchableOpacity style={styles.editBtn} onPress={() => openEdit(item)}>
-                <Ionicons name="create-outline" size={16} color="#1A73E8" />
+                <Ionicons name="create-outline" size={16} color="#f78504" />
                 <Text style={styles.editBtnText}>Editar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.deleteBtn} onPress={() => handleDelete(item)}>
@@ -226,24 +226,24 @@ export default function Products() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8F9FA' },
+  container: { flex: 1, backgroundColor: '#1a1818' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
   headerTitle: { fontSize: 20, fontWeight: '800', color: '#333' },
-  addBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#1A73E8', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 8, gap: 4 },
+  addBtn: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#f78504', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 8, gap: 4 },
   addBtnText: { color: '#FFF', fontWeight: '700', fontSize: 14 },
   list: { padding: 16, paddingBottom: 40 },
   empty: { alignItems: 'center', paddingTop: 60, gap: 12 },
   emptyText: { fontSize: 16, color: '#999' },
-  emptyBtn: { marginTop: 8, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: '#1A73E8', borderRadius: 8 },
+  emptyBtn: { marginTop: 8, paddingHorizontal: 20, paddingVertical: 10, backgroundColor: '#f78504', borderRadius: 8 },
   emptyBtnText: { color: '#FFF', fontWeight: '600' },
-  addButton: {marginBottom: 16,},
+  addButton: {marginBottom: 16,backgroundColor: '#f78504'},
   card: { backgroundColor: '#FFF', borderRadius: 12, padding: 16, marginBottom: 12, borderWidth: 1, borderColor: '#E8E8E8' },
   cardInactive: { opacity: 0.6, borderColor: '#DDD' },
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
   productName: { fontSize: 16, fontWeight: '700', color: '#333' },
   productDesc: { fontSize: 13, color: '#666', marginTop: 2 },
   priceBox: { backgroundColor: '#E8F0FE', paddingHorizontal: 12, paddingVertical: 6, borderRadius: 8 },
-  priceText: { fontSize: 16, fontWeight: '800', color: '#1A73E8' },
+  priceText: { fontSize: 16, fontWeight: '800', color: '#f78504' },
   metaRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
   stockBadge: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   stockText: { fontSize: 13, fontWeight: '600' },
@@ -252,8 +252,8 @@ const styles = StyleSheet.create({
   actionsRow: { flexDirection: 'row', gap: 8, borderTopWidth: 1, borderTopColor: '#F0F0F0', paddingTop: 10 },
   sellBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#34C759', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 8 },
   sellBtnText: { color: '#FFF', fontWeight: '600', fontSize: 13 },
-  editBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1, borderColor: '#1A73E8' },
-  editBtnText: { color: '#1A73E8', fontWeight: '600', fontSize: 13 },
+  editBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8, borderWidth: 1, borderColor: '#f78504' },
+  editBtnText: { color: '#f78504', fontWeight: '600', fontSize: 13 },
   deleteBtn: { padding: 8 },
 
   // Modal
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
   modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingBottom: 16, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
   modalCancel: { fontSize: 16, color: '#666' },
   modalTitle: { fontSize: 17, fontWeight: '700', color: '#333' },
-  modalSave: { fontSize: 16, fontWeight: '700', color: '#1A73E8' },
+  modalSave: { fontSize: 16, fontWeight: '700', color: '#f78504' },
   modalScroll: { flex: 1 },
   modalContent: { padding: 16, paddingBottom: 40 },
   label: { fontSize: 14, fontWeight: '600', color: '#333', marginBottom: 6, marginTop: 16 },

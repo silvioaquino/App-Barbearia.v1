@@ -183,7 +183,7 @@ export default function Services() {
                 style={styles.photosButton}
                 onPress={() => router.push({ pathname: '/service-photos', params: { serviceId: item.id, serviceName: item.name } })}
               >
-                <Ionicons name="camera-outline" size={18} color="#007AFF" />
+                <Ionicons name="camera-outline" size={18} color="#f78504" />
                 <Text style={styles.photosButtonText}>Fotos</Text>
               </TouchableOpacity>
             </View>
@@ -259,13 +259,14 @@ const styles = StyleSheet.create({
   
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#1a1818',
   },
   list: {
     padding: 16,
   },
   addButton: {
     marginBottom: 16,
+    backgroundColor: '#f78504',
   },
   empty: {
     alignItems: 'center',
@@ -334,10 +335,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#007AFF',
+    borderColor: '#f78504',
   },
   photosButtonText: {
-    color: '#007AFF',
+    color: '#f78504',
     fontSize: 14,
     fontWeight: '600',
   },

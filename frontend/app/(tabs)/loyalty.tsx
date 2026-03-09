@@ -135,7 +135,7 @@ export default function Loyalty() {
               <Text style={s.progressText}>{Math.max(config.redemption_threshold - c.points, 0)} pontos para resgate</Text>
               <View style={s.clientActions}>
                 <TouchableOpacity style={s.actionBtn} onPress={() => loadHistory(c.client_phone)}>
-                  <Ionicons name="time-outline" size={16} color="#007AFF" />
+                  <Ionicons name="time-outline" size={16} color="#f78504" />
                   <Text style={s.actionText}>Histórico</Text>
                 </TouchableOpacity>
                 {c.points >= config.redemption_threshold && (
@@ -232,7 +232,7 @@ export default function Loyalty() {
 }
 
 const s = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F5F5F5' },
+  container: { flex: 1, backgroundColor: '#1a1818' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, paddingBottom: 8 },
   title: { fontSize: 22, fontWeight: '700', color: '#333' },
   configCard: { margin: 16, backgroundColor: '#FFF', borderRadius: 12, padding: 16, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 },
@@ -242,8 +242,8 @@ const s = StyleSheet.create({
   statusBadge: { alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 4, borderRadius: 12, marginTop: 8 },
   statusText: { color: '#FFF', fontSize: 12, fontWeight: '600' },
   sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, marginBottom: 12 },
-  sectionTitle: { fontSize: 16, fontWeight: '600', color: '#333' },
-  addBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#007AFF', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8 },
+  sectionTitle: { fontSize: 16, fontWeight: '600', color: '#FFF' },
+  addBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: '#f78504', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 8 },
   addBtnText: { color: '#FFF', fontSize: 13, fontWeight: '600' },
   empty: { alignItems: 'center', padding: 40 },
   emptyText: { fontSize: 16, color: '#999', marginTop: 12 },
@@ -253,14 +253,14 @@ const s = StyleSheet.create({
   clientName: { fontSize: 16, fontWeight: '600', color: '#333' },
   clientPhone: { fontSize: 13, color: '#666', marginTop: 2 },
   pointsBadge: { alignItems: 'center' },
-  pointsNum: { fontSize: 24, fontWeight: '800', color: '#007AFF' },
+  pointsNum: { fontSize: 24, fontWeight: '800', color: '#f78504' },
   pointsLabel: { fontSize: 11, color: '#666' },
   progressBar: { height: 6, backgroundColor: '#E0E0E0', borderRadius: 3, marginTop: 12, overflow: 'hidden' },
   progressFill: { height: '100%', backgroundColor: '#34C759', borderRadius: 3 },
   progressText: { fontSize: 12, color: '#999', marginTop: 4 },
   clientActions: { flexDirection: 'row', gap: 8, marginTop: 12 },
-  actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 6, borderWidth: 1, borderColor: '#007AFF' },
-  actionText: { fontSize: 13, color: '#007AFF', fontWeight: '500' },
+  actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 6, borderWidth: 1, borderColor: '#f78504' },
+  actionText: { fontSize: 13, color: '#f78504', fontWeight: '500' },
   redeemBtn: { backgroundColor: '#34C759', borderColor: '#34C759' },
   modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 20 },
   modal: { backgroundColor: '#FFF', borderRadius: 16, padding: 20 },
@@ -270,7 +270,7 @@ const s = StyleSheet.create({
   modalActions: { flexDirection: 'row', gap: 12, marginTop: 20 },
   cancelBtn: { flex: 1, padding: 14, borderRadius: 8, borderWidth: 1, borderColor: '#DDD', alignItems: 'center' },
   cancelText: { color: '#666', fontWeight: '600' },
-  saveBtn: { flex: 1, padding: 14, borderRadius: 8, backgroundColor: '#007AFF', alignItems: 'center' },
+  saveBtn: { flex: 1, padding: 14, borderRadius: 8, backgroundColor: '#f78504', alignItems: 'center' },
   saveBtnText: { color: '#FFF', fontWeight: '600' },
   historyItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#F0F0F0' },
   historyDesc: { fontSize: 14, color: '#333' },
