@@ -1,6 +1,6 @@
 .history-page {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: #1a1818;
 }
 
 .history-container {
@@ -16,20 +16,20 @@
 
 .history-header h1 {
   font-size: 2.5rem;
-  color: #333;
+  color: #FFF;
   margin-bottom: 8px;
 }
 
 .history-header p {
   font-size: 1.1rem;
-  color: #666;
+  color: #FFF;
 }
 
 .tabs {
   display: flex;
   gap: 10px;
   margin-bottom: 30px;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid #fff;
 }
 
 .tab {
@@ -45,12 +45,12 @@
 }
 
 .tab:hover {
-  color: #007AFF;
+  color: #f78504;
 }
 
 .tab.active {
-  color: #007AFF;
-  border-bottom-color: #007AFF;
+  color: #f78504;
+  border-bottom-color: #f78504;
 }
 
 .history-list {
@@ -69,7 +69,7 @@
 }
 
 .date-box {
-  background: linear-gradient(135deg, #007AFF 0%, #0056b3 100%);
+  background: linear-gradient(135deg, #eb9636 0%, #f78504 100%);
   color: white;
   padding: 16px;
   border-radius: 12px;

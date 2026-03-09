@@ -10,13 +10,13 @@ export default function Home() {
       
       <section className="hero">
         <div className="hero-content">
-          <h1 className="hero-title">Barbershop Premium</h1>
+          <h1 className="hero-title">Barbearia D'Ferr</h1>
           <p className="hero-subtitle">
             Agende seu horário com os melhores profissionais
           </p>
           <div className="hero-buttons">
-            <Link to="/agendar" className="btn-primary">
-              Agendar Agora
+            <Link to="/agendar" className="btn-primar">
+              Agendamento Rapido
             </Link>
             <Link to="/login" className="btn-secondary">
               Área do Cliente
@@ -37,7 +37,7 @@ export default function Home() {
               <ul className="option-features">
                 <li>Sem necessidade de cadastro</li>
                 <li>Escolha o serviço, data e horário</li>
-                <li>Confirmação imediata</li>
+                <li>Cancelamento só via <a href="https://wa.me/5581987977517" style={{ color: '#38d423',fontSize: '1.2rem'}} target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
               </ul>
               <Link to="/agendar" className="option-btn">
                 Agendar sem Login
@@ -54,6 +54,7 @@ export default function Home() {
                 <li>Promoções e descontos exclusivos</li>
                 <li>Histórico completo de serviços</li>
                 <li>Agendamento com perfil salvo</li>
+                <li>Cancelamento Facil e Rapido</li>
               </ul>
               <Link to="/login" className="option-btn premium">
                 Entrar / Criar Conta
@@ -94,7 +95,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      
       <footer className="footer">
         <div className="footer-content">
           <p>&copy; 2026 Barbershop Premium. Todos os direitos reservados.</p>

@@ -3,7 +3,7 @@
 }
 
 .hero {
-  background: linear-gradient(135deg, #007AFF 0%, #0056b3 100%);
+  background: linear-gradient(135deg, #f78504 0%, #995304 100%);
   color: white;
   padding: 100px 20px;
   text-align: center;
@@ -33,9 +33,11 @@
   flex-wrap: wrap;
 }
 
-.btn-primary {
-  background: white;
-  color: #007AFF;
+
+
+.btn-primar {
+  background: #f78504;
+  color: #FFF;
   padding: 1rem 2rem;
   border-radius: 12px;
   text-decoration: none;
@@ -44,8 +46,9 @@
   transition: transform 0.3s;
 }
 
-.btn-primary:hover {
+.btn-primar:hover {
   transform: translateY(-2px);
+  background: #f8a648f3;
 }
 
 .btn-secondary {
@@ -62,12 +65,12 @@
 
 .btn-secondary:hover {
   background: white;
-  color: #007AFF;
+  color: #f78504;
 }
 
 .features {
   padding: 80px 20px;
-  background: #f5f5f5;
+  background: #333030;
 }
 
 .features-container {
@@ -79,7 +82,7 @@
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
-  color: #333;
+  color: #FFF;
 }
 
 .features-grid {
@@ -118,7 +121,7 @@
 }
 
 .cta {
-  background: #007AFF;
+  background: #f78504;
   color: white;
   padding: 80px 20px;
   text-align: center;
@@ -140,9 +143,9 @@
   opacity: 0.95;
 }
 
-.btn-primary-large {
-  background: white;
-  color: #007AFF;
+.btn-primar-large {
+  background: #f78504;
+  color: #FFF;
   padding: 1.2rem 3rem;
   border-radius: 12px;
   text-decoration: none;
@@ -154,10 +157,11 @@
 
 .btn-primary-large:hover {
   transform: translateY(-2px);
+  background: #f8a648f3;
 }
 
 .footer {
-  background: #333;
+  background: #000;
   color: white;
   padding: 2rem;
   text-align: center;
@@ -171,7 +175,7 @@
 /* Two Options Section */
 .two-options {
   padding: 60px 20px;
-  background: white;
+  background: #1a1818;
 }
 
 .options-container {
@@ -207,7 +211,7 @@
 }
 
 .member-card {
-  border-color: #007AFF;
+  border-color: #f78504;
   background: #f0f7ff;
 }
 
@@ -215,7 +219,7 @@
   position: absolute;
   top: -12px;
   right: 20px;
-  background: #007AFF;
+  background: #f78504;
   color: white;
   padding: 4px 12px;
   border-radius: 12px;
@@ -281,10 +285,10 @@
 }
 
 .option-btn.premium {
-  background: #007AFF;
+  background: #f78504;
   color: white;
 }
 
 .option-btn.premium:hover {
-  background: #0056b3;
+  background: #c96c03;
 }

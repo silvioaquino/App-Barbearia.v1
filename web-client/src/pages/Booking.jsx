@@ -402,7 +402,7 @@ export default function Booking() {
       <div className="booking-container">
         <div className="booking-header">
           <h1>Agendar Horário</h1>
-          <p className="booking-subtitle">Agende sem precisar fazer login</p>
+          {/*<p className="booking-subtitle">Agende sem precisar fazer login</p>*/}
           {step < 5 && (
             <div className="booking-steps">
               <div className={`step ${step >= 1 ? 'active' : ''} ${step > 1 ? 'done' : ''}`}>1. Serviço</div>
