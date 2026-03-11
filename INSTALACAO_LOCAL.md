@@ -38,6 +38,7 @@ cd backend
 
 # Criar ambiente virtual (recomendado)
 python -m venv venv
+py -3.11 -m venv venv311
 
 # Ativar ambiente virtual
 # Windows:
@@ -47,7 +48,31 @@ source venv/bin/activate
 
 # Instalar dependências
 pip install -r requirements.txt
+python.exe -m pip install --upgrade pip
+pip install psycopg_binary
+pip install psycopg 
+pip install pydantic_settings 
+pip install sqlalchemy 
+pip uninstall greenlet -y 
+pip install greenlet==3.0.3
+pip install uvicorn
+pip install fastapi
+pip install httpx
+pip install pydantic[email]
+pip install exponent_server_sdk
+
+
 ```
+
+# Add no inicio do arquivo database.py
+   import asyncio
+   import sys
+
+   # No Windows, força o uso do SelectorEventLoopPolicy
+   if sys.platform == 'win32':
+      asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+
 
 ### 2.2. Configurar NeonDB
 

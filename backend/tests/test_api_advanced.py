@@ -8,7 +8,7 @@ import os
 import asyncio
 from datetime import datetime, timedelta
 
-BASE_URL = os.environ.get('EXPO_PUBLIC_BACKEND_URL', 'https://barber-manager-26.preview.emergentagent.com').rstrip('/')
+BASE_URL = os.environ.get('EXPO_PUBLIC_BACKEND_URL', 'https://agendacorte-6.preview.emergentagent.com').rstrip('/')
 
 # We'll create a test session using the database directly
 # Since we can't use Emergent Auth directly, we need a pre-created session token

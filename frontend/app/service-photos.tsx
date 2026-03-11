@@ -134,7 +134,7 @@ export default function ServicePhotos() {
     <SafeAreaView style={s.container}>
       <View style={s.header}>
         <TouchableOpacity onPress={() => router.back()} style={s.backBtn}>
-          <Ionicons name="arrow-back" size={24} color="#FFF" />
+          <Ionicons name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         <View style={{ flex: 1 }}>
           <Text style={s.title}>Fotos</Text>
@@ -142,9 +142,9 @@ export default function ServicePhotos() {
         </View>
         <TouchableOpacity onPress={showPhotoOptions} style={s.addBtn} disabled={uploading} data-testid="add-photo-btn">
           {uploading ? (
-            <ActivityIndicator size="small" color="#FFF" />
+            <ActivityIndicator size="small" color="#007AFF" />
           ) : (
-            <Ionicons name="camera" size={24} color="#FFF" />
+            <Ionicons name="camera" size={24} color="#007AFF" />
           )}
         </TouchableOpacity>
       </View>
@@ -193,10 +193,10 @@ export default function ServicePhotos() {
 
 const s = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F5F5F5' },
-  header: { flexDirection: 'row', alignItems: 'center', padding: 16, paddingTop: 40, backgroundColor: '#007AFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
+  header: { flexDirection: 'row', alignItems: 'center', padding: 16, paddingTop: 12, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
   backBtn: { padding: 4 },
-  title: { fontSize: 20, fontWeight: '700', color: '#FFF', marginLeft: 12 },
-  subtitle: { fontSize: 13, color: '#FFF', marginLeft: 12 },
+  title: { fontSize: 20, fontWeight: '700', color: '#333', marginLeft: 12 },
+  subtitle: { fontSize: 13, color: '#666', marginLeft: 12 },
   addBtn: { padding: 8 },
   content: { padding: 12 },
   empty: { alignItems: 'center', paddingVertical: 60 },

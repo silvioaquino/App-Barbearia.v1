@@ -59,10 +59,10 @@ export default function Dashboard() {
       <div className="dashboard-container">
         <div className="dashboard-header">
           <h1>Olá, {user?.name}! 👋</h1>
-          <p>Bem-vindo à sua área de Cliente</p>
+          <p>Bem-vindo à sua área pessoal</p>
         </div>
 
-        {/* <div className="stats-grid">
+        <div className="stats-grid">
           <Link to="/historico" className="stat-card">
             <div className="stat-icon">📊</div>
             <div className="stat-info">
@@ -94,30 +94,7 @@ export default function Dashboard() {
               <p>Agendar horário</p>
             </div>
           </Link>
-        </div>*/}
-
-        <div className="quick-actions">
-          <h2>Ações Rápidas</h2>
-          <div className="actions-grid">
-            <Link to="/agendar" className="action-card">
-              <span className="action-icon">📅</span>
-              <h3>Agendar Horário</h3>
-            </Link>
-            <Link to="/promocoes" className="action-card">
-              <span className="action-icon">🎁</span>
-              <h3>Ver Promoções</h3>
-            </Link>
-            <Link to="/fidelidade" className="action-card">
-              <span className="action-icon">⭐</span>
-              <h3>Meus Pontos</h3>
-            </Link>
-            <Link to="/historico" className="action-card">
-              <span className="action-icon">📊</span>
-              <h3>Histórico</h3>
-            </Link>
-          </div>
         </div>
-
 
         <Card>
           <div className="section-header">
@@ -159,7 +136,27 @@ export default function Dashboard() {
           )}
         </Card>
 
-        
+        <div className="quick-actions">
+          <h2>Ações Rápidas</h2>
+          <div className="actions-grid">
+            <Link to="/agendar" className="action-card">
+              <span className="action-icon">📅</span>
+              <h3>Agendar Horário</h3>
+            </Link>
+            <Link to="/promocoes" className="action-card">
+              <span className="action-icon">🎁</span>
+              <h3>Ver Promoções</h3>
+            </Link>
+            <Link to="/fidelidade" className="action-card">
+              <span className="action-icon">⭐</span>
+              <h3>Meus Pontos</h3>
+            </Link>
+            <Link to="/historico" className="action-card">
+              <span className="action-icon">📊</span>
+              <h3>Histórico</h3>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

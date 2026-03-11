@@ -31,7 +31,7 @@ const AUTH_URL = 'https://auth.emergentagent.com';
 
 /**
  * Generates the correct redirect URL based on the environment:
- * - Web preview: uses window.location.origin (e.g., https://barber-manager-26.preview.emergentagent.com)
+ * - Web preview: uses window.location.origin (e.g., https://agendacorte-6.preview.emergentagent.com)
  * - Expo Go (local): uses Linking.createURL which generates exp://IP:PORT/--/path
  * - Production build: uses the app scheme (e.g., frontend://auth-callback)
  */
@@ -42,7 +42,7 @@ function getRedirectUrl(): string {
       return `${window.location.origin}/auth-callback`;
     }
     // Fallback for SSR
-    const backendUrl = Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL || 'https://barber-manager-26.preview.emergentagent.com';
+    const backendUrl = Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL || 'https://agendacorte-6.preview.emergentagent.com';
     return `${backendUrl}/auth-callback`;
   }
 

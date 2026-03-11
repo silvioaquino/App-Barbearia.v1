@@ -125,11 +125,11 @@ export default function PromotionsManage() {
     <SafeAreaView style={s.container}>
       <View style={s.header}>
         <TouchableOpacity onPress={() => router.back()} style={s.backBtn}>
-          <Ionicons name="arrow-back" size={24} color="#FFF" />
+          <Ionicons name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         <Text style={s.title}>Promoções</Text>
         <TouchableOpacity onPress={openAdd} style={s.addHeaderBtn} data-testid="add-promotion-btn">
-          <Ionicons name="add" size={24} color="#FFF" />
+          <Ionicons name="add" size={24} color="#007AFF" />
         </TouchableOpacity>
       </View>
 
@@ -243,9 +243,9 @@ export default function PromotionsManage() {
 
 const s = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F5F5F5' },
-  header: { flexDirection: 'row', alignItems: 'center', padding: 16, paddingTop: 40, backgroundColor: '#007AFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
+  header: { flexDirection: 'row', alignItems: 'center', padding: 16, paddingTop: 12, backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E8E8E8' },
   backBtn: { padding: 4 },
-  title: { flex: 1, fontSize: 20, fontWeight: '700', color: '#FFF', marginLeft: 12 },
+  title: { flex: 1, fontSize: 20, fontWeight: '700', color: '#333', marginLeft: 12 },
   addHeaderBtn: { padding: 4 },
   content: { padding: 16 },
   empty: { alignItems: 'center', paddingVertical: 60 },

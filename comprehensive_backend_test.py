@@ -21,7 +21,7 @@ from database import async_session_factory, init_db
 from models import User, UserSession
 
 class ComprehensiveBarbershopTester:
-    def __init__(self, base_url: str = "https://barber-manager-26.preview.emergentagent.com"):
+    def __init__(self, base_url: str = "https://agendacorte-6.preview.emergentagent.com"):
         self.base_url = base_url
         self.session = requests.Session()
         self.test_token: Optional[str] = None

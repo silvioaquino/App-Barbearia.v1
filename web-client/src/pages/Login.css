@@ -1,63 +1,16 @@
-.login-page { min-height: 100vh; background: #1a1818; }
+.login-page { min-height: 100vh; background: var(--bg-primary); }
 .login-container { max-width: 440px; margin: 0 auto; padding: 40px 20px; }
 .login-card { padding: 40px !important; }
 .login-header { text-align: center; margin-bottom: 24px; }
-.login-header h1 { font-size: 28px; color: #333; margin-bottom: 8px; }
-.login-header p { color: #666; font-size: 15px; }
-
-.login-benefits { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; padding: 16px; background: #f0f7ff; border-radius: 12px; }
-.benefit-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #333; }
+.login-header h1 { font-size: 28px; color: var(--text-primary); margin-bottom: 8px; }
+.login-header p { color: var(--text-secondary); font-size: 15px; }
+.login-benefits { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; padding: 16px; background: var(--bg-accent-soft); border-radius: 12px; border: 1px solid var(--border); }
+.benefit-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-primary); }
 .benefit-icon { font-size: 18px; }
-
-.google-login-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 14px;
-  background: white;
-  border: 2px solid #e8e8e8;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.google-login-btn:hover {
-  background: #f8f9fa;
-  border-color: #4285F4;
-  box-shadow: 0 2px 8px rgba(66, 133, 244, 0.2);
-}
-
-.login-divider {
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  gap: 12px;
-}
-.login-divider::before, .login-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: #e8e8e8;
-}
-.login-divider span { color: #999; font-size: 13px; }
-
-.public-booking-link {
-  display: block;
-  text-align: center;
-  padding: 12px;
-  color: #007AFF;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 15px;
-  border-radius: 10px;
-  border: 1px solid #007AFF;
-  transition: all 0.2s;
-}
-.public-booking-link:hover {
-  background: #007AFF;
-  color: white;
-}
+.google-login-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 14px; background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; transition: all 0.2s; }
+.google-login-btn:hover { border-color: #4285F4; box-shadow: 0 2px 8px rgba(66, 133, 244, 0.2); }
+.login-divider { display: flex; align-items: center; margin: 20px 0; gap: 12px; }
+.login-divider::before, .login-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.login-divider span { color: var(--text-muted); font-size: 13px; }
+.public-booking-link { display: block; text-align: center; padding: 12px; color: var(--accent); text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 10px; border: 1px solid var(--accent); transition: all 0.2s; }
+.public-booking-link:hover { background: var(--accent); color: white; }

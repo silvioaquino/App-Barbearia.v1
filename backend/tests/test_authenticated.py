@@ -80,7 +80,7 @@ async def create_test_session():
 
 def test_authenticated_endpoints(token):
     """Test endpoints with authentication"""
-    BASE_URL = "https://barber-manager-26.preview.emergentagent.com"
+    BASE_URL = "https://agendacorte-6.preview.emergentagent.com"
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"

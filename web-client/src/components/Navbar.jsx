@@ -1,10 +1,12 @@
-{/*import React from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import './Navbar.css';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -29,8 +31,8 @@ export default function Navbar() {
           ) : (
             <>
               <Link to="/dashboard" className="navbar-link">Painel</Link>
-              <Link to="/historico" className="navbar-link">Histórico</Link>
-              <Link to="/promocoes" className="navbar-link">Promoções</Link>
+              <Link to="/historico" className="navbar-link">Historico</Link>
+              <Link to="/promocoes" className="navbar-link">Promocoes</Link>
               <Link to="/fidelidade" className="navbar-link">Fidelidade</Link>
               <span className="navbar-user">{user.name}</span>
               <button onClick={handleLogout} className="navbar-button-logout">
@@ -38,119 +40,20 @@ export default function Navbar() {
               </button>
             </>
           )}
-        </div>
-      </div>
-    </nav>
-  );
-}*/}
-
-
-
-import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import './Navbar.css';
-
-export default function Navbar() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-  const hamburgerRef = useRef(null);
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/');
-    setIsMenuOpen(false);
-  };
-
-  const handleLinkClick = () => {
-    setIsMenuOpen(false);
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  // Fecha o menu ao clicar fora
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      // Se o menu estiver aberto e o clique não foi no menu nem no botão hamburger
-      if (
-        isMenuOpen && 
-        menuRef.current && 
-        !menuRef.current.contains(event.target) &&
-        !hamburgerRef.current.contains(event.target)
-      ) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isMenuOpen]);
-
-  return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-brand" onClick={handleLinkClick}>
-          💈 Barbearia D'Ferr
-        </Link>
-        
-        {/* Menu Hamburger Button */}
-        <button 
-          ref={hamburgerRef}
-          className={`hamburger-btn ${isMenuOpen ? 'active' : ''}`} 
-          onClick={toggleMenu}
-          aria-label="Menu"
-        >
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-          <span className="hamburger-line"></span>
-        </button>
-
-        {/* Navigation Menu */}
-        <div 
-          ref={menuRef}
-          className={`navbar-menu ${isMenuOpen ? 'active' : ''}`}
-          onClick={(e) => e.stopPropagation()} // Impede que cliques dentro do menu fechem ele
-        >
-          {!user ? (
-            <>
-              <Link to="/agendar-publico" className="navbar-link" onClick={handleLinkClick}>
-                Agendar Agora
-              </Link>
-              <Link to="/login" className="navbar-link" onClick={handleLinkClick}>
-                Login
-              </Link>
-              <Link to="/registrar" className="navbar-button" onClick={handleLinkClick}>
-                Cadastrar
-              </Link>
-            </>
-          ) : (
-            <>
-              <Link to="/dashboard" className="navbar-link" onClick={handleLinkClick}>
-                Início
-              </Link>
-              <Link to="/historico" className="navbar-link" onClick={handleLinkClick}>
-                Histórico
-              </Link>
-              <Link to="/promocoes" className="navbar-link" onClick={handleLinkClick}>
-                Promoções
-              </Link>
-              <Link to="/fidelidade" className="navbar-link" onClick={handleLinkClick}>
-                Fidelidade
-              </Link>
-              <button onClick={handleLogout} className="navbar-button-logout">
-                Sair
-              </button>
-            </>
-          )}
+          <button
+            className="theme-toggle"
+            onClick={toggleTheme}
+            title={isDark ? 'Modo claro' : 'Modo escuro'}
+            data-testid="theme-toggle"
+          >
+            {isDark ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            )}
+          </button>
         </div>
       </div>
     </nav>
   );
 }
-

@@ -180,7 +180,7 @@ async def close_cash_register(
     
     return cash_register
 
-@router.get("/current", response_model=CashRegisterResponse)
+@router.get("/current")
 async def get_current_cash_register(
     db: AsyncSession = Depends(get_db),
     current_user = Depends(get_current_barber)
