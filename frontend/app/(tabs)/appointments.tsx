@@ -130,7 +130,8 @@ export default function Appointments() {
             )}
             {item.status === 'confirmed' && (
               <View style={styles.actions}>
-                <Button title="Concluir" variant="primary" onPress={() => handleComplete(item.id)} />
+                <Button title="Concluir" variant="primary" onPress={() => handleComplete(item.id)} style={styles.actionButton} />
+                <Button title="Cancelar" variant="danger" onPress={() => handleCancel(item.id)} style={styles.actionButton} />
               </View>
             )}
           </Card>
